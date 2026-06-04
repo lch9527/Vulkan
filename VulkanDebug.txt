@@ -1,0 +1,304 @@
+FpDebug: Width = 1024 ; Height = 1024
+
+***** InitGraphics *****
+
+Found 2 GLFW Required Instance Extensions:
+	VK_KHR_surface
+	VK_KHR_win32_surface
+
+***** Init01Instance *****
+
+4 Instance Layers originally wanted:
+	VK_LAYER_LUNARG_core_validation
+	VK_LAYER_LUNARG_object_tracker
+	VK_LAYER_LUNARG_parameter_validation
+	VK_LAYER_NV_optimus
+vkEnumerateInstanceLayerProperties: Successful
+
+3 Instance Layers actually available:
+0x004030cd   1  'VK_LAYER_NV_optimus'  'NVIDIA Optimus layer'
+0x004030cf   1  'VK_LAYER_VALVE_steam_overlay'  'Steam Overlay Layer'
+0x004030cf   1  'VK_LAYER_VALVE_steam_fossilize'  'Steam Pipeline Caching Layer'
+
+Will now ask for 1 Instance Layers:
+	VK_LAYER_NV_optimus
+
+3 Instance Extensions originally wanted:
+	VK_KHR_surface
+	VK_KHR_win32_surface
+	VK_EXT_debug_report
+vkEnumerateInstanceExtensionProperties: Successful
+
+16 Instance Extensions actually available:
+0x00000001  'VK_KHR_device_group_creation'
+0x00000017  'VK_KHR_display'
+0x00000001  'VK_KHR_external_fence_capabilities'
+0x00000001  'VK_KHR_external_memory_capabilities'
+0x00000001  'VK_KHR_external_semaphore_capabilities'
+0x00000001  'VK_KHR_get_display_properties2'
+0x00000002  'VK_KHR_get_physical_device_properties2'
+0x00000001  'VK_KHR_get_surface_capabilities2'
+0x00000019  'VK_KHR_surface'
+0x00000001  'VK_KHR_surface_protected_capabilities'
+0x00000006  'VK_KHR_win32_surface'
+0x0000000a  'VK_EXT_debug_report'
+0x00000002  'VK_EXT_debug_utils'
+0x00000001  'VK_EXT_direct_mode_display'
+0x00000004  'VK_EXT_swapchain_colorspace'
+0x00000001  'VK_NV_external_memory_capabilities'
+
+Will now ask for 3 Instance Extensions
+	VK_KHR_surface
+	VK_KHR_win32_surface
+	VK_EXT_debug_report
+vkCreateInstance: Successful
+glfwCreateWindowSurface: Successful
+
+***** Init02CreateDebugCallbacks *****
+
+***** Init03PhysicalDeviceAndGetQueueFamilyProperties *****
+vkEnumeratePhysicalDevices - 1: Successful
+
+2 physical devices found.
+vkEnumeratePhysicalDevices - 2: Successful
+ 
+
+Device  0:
+	API version: 4202647
+	Driver version: 4202647
+	Vendor ID: 0x8086
+	Device ID: 0x3e9b
+	Physical Device Type: 1 = (Integrated GPU)
+	Device Name: Intel(R) UHD Graphics 630
+	Pipeline Cache Size: 40
+ 
+
+Device  1:
+	API version: 4206797
+	Driver version: 4206797
+	Vendor ID: 0x10de
+	Device ID: 0x1c8c
+	Physical Device Type: 2 = (Discrete GPU)
+	Device Name: NVIDIA GeForce GTX 1050 Ti with Max-Q Design
+	Pipeline Cache Size: 230
+Device #1 selected ('NVIDIA GeForce GTX 1050 Ti with Max-Q Design')
+
+Physical Device Features:
+geometryShader =  1
+tessellationShader =  1
+multiDrawIndirect =  1
+wideLines =  1
+largePoints =  1
+multiViewport =  1
+occlusionQueryPrecise =  1
+pipelineStatisticsQuery =  1
+shaderFloat64 =  1
+shaderInt64 =  1
+shaderInt16 =  1
+
+Image Formats Checked:
+Format VK_FORMAT_R32G32B32A32_SFLOAT: 0x0001d401 0x0001dd83  0x00000058
+Format VK_FORMAT_R8G8B8A8_UNORM: 0x0001d401 0x0001dd83  0x20000058
+Format VK_FORMAT_B8G8R8A8_UNORM: 0x0001d401 0x0001dd83  0x00000058
+Format VK_FORMAT_B8G8R8A8_SRGB: 0x0001d401 0x0001dd81  0x00000000
+
+11 Memory Types:
+Memory  0: 
+Memory  1: 
+Memory  2: 
+Memory  3: 
+Memory  4: 
+Memory  5: 
+Memory  6: 
+Memory  7:  DeviceLocal
+Memory  8:  HostVisible HostCoherent
+Memory  9:  HostVisible HostCoherent HostCached
+Memory 10:  DeviceLocal HostVisible HostCoherent
+
+3 Memory Heaps:
+Heap 0:  size = 0xfb300000 DeviceLocal
+Heap 1:  size = 0xf1bef000
+Heap 2:  size = 0x0d600000 DeviceLocal
+
+Found 3 Queue Families:
+	0: Queue Family Count = 16  ;    Graphics Compute Transfer
+	1: Queue Family Count =  2  ;    Transfer
+	2: Queue Family Count =  8  ;    Compute Transfer
+
+***** Init04LogicalDeviceAndQueue *****
+vkEnumerateDeviceLayerProperties: Successful
+
+2 physical device layers enumerated:
+0x004030cd   1  'VK_LAYER_NV_optimus'  'NVIDIA Optimus layer'
+vkEnumerateDeviceExtensionProperties: Successful
+	0 device extensions enumerated for 'VK_LAYER_NV_optimus':
+
+0x004030cd   1  'VK_LAYER_NV_optimus'  'NVIDIA Optimus layer'
+vkEnumerateDeviceExtensionProperties: Successful
+	0 device extensions enumerated for 'VK_LAYER_NV_optimus':
+
+vkCreateLogicalDevice: Successful
+
+***** Init05DataBuffer *****
+vkCreateBuffer: Successful
+Buffer vmr.size = 256
+Buffer vmr.alignment = 256
+Buffer vmr.memoryTypeBits = 0x00000781
+
+***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+vkAllocateMemory: Successful
+vkBindBufferMemory: Successful
+
+***** Init05DataBuffer *****
+vkCreateBuffer: Successful
+Buffer vmr.size = 256
+Buffer vmr.alignment = 256
+Buffer vmr.memoryTypeBits = 0x00000781
+
+***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+vkAllocateMemory: Successful
+vkBindBufferMemory: Successful
+
+***** Init05DataBuffer *****
+vkCreateBuffer: Successful
+Buffer vmr.size = 256
+Buffer vmr.alignment = 256
+Buffer vmr.memoryTypeBits = 0x00000781
+
+***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+vkAllocateMemory: Successful
+vkBindBufferMemory: Successful
+
+***** Init05DataBuffer *****
+vkCreateBuffer: Successful
+Buffer vmr.size = 512
+Buffer vmr.alignment = 256
+Buffer vmr.memoryTypeBits = 0x00000781
+
+***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+vkAllocateMemory: Successful
+vkBindBufferMemory: Successful
+
+***** Init05DataBuffer *****
+vkCreateBuffer: Successful
+Buffer vmr.size = 100320
+Buffer vmr.alignment = 16
+Buffer vmr.memoryTypeBits = 0x00000781
+
+***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+vkAllocateMemory: Successful
+vkBindBufferMemory: Successful
+InitDataBuffer: Successful
+
+***** Init06CommandPools *****
+vkCreateCommandPool -- Graphics: Successful
+vkCreateCommandPool -- Transfer: Successful
+
+***** Init06CommandBuffers *****
+vkAllocateCommandBuffers - 1: Successful
+vkAllocateCommandBuffers - 2: Successful
+
+***** Init07TextureSampler *****
+vkCreateSampler: Successful
+
+***** Init07TextureBufferAndFillFromBmpFile *****
+Image size found: 1488 x 1484
+
+***** Init07TextureBuffer *****
+vkCreateImage: Successful
+Image vmr.size = 8832768
+Image vmr.alignment = 32
+Image vmr.memoryTypeBits = 0x00000781
+
+***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+vkAllocateMemory: Successful
+vkBindImageMemory: Successful
+Subresource Layout:
+	offset = 0
+	size = 8832768
+	rowPitch = 5952
+	arrayPitch = 8832768
+	depthPitch = 8832768
+vkCreateImage: Successful
+Texture vmr.size = 9142272
+Texture vmr.alignment = 1024
+Texture vmr.memoryTypeBits = 0x00000082
+
+***** Found given memory flag (0x00000001) and type (0x00000082): i = 7 *****
+vkAllocateMemory: Successful
+vkBindImageMemory: Successful
+Init07TextureBuffer -- vkBeginCommandBuffer: Successful
+Init07TextureBuffer -- vkEndCommandBuffer: Successful
+vkQueueSubmit: Successful
+vkQueueWaitIdle: Successful
+vkCreateImageView: Successful
+Init07TextureBuffer: Successful
+
+***** Init08Swapchain *****
+
+vkGetPhysicalDeviceSurfaceCapabilitiesKHR:
+	minImageCount = 2 ; maxImageCount = 8
+	currentExtent = 1024 x 1024
+	minImageExtent = 1024 x 1024
+	maxImageExtent = 1024 x 1024
+	maxImageArrayLayers = 1
+	supportedTransforms = 0x0001
+	currentTransform = 0x0001
+	supportedCompositeAlpha = 0x0001
+	supportedUsageFlags = 0x009f
+vkGetPhysicalDeviceSurfaceSupportKHR: Successful
+** This Surface is supported by the Graphics Queue **
+
+Found 3 Surface Formats:
+  0:       44                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+  1:       50                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+  2:       64                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+
+Found 4 Present Modes:
+  0:        2	VK_PRESENT_MODE_FIFO_KHR
+  1:        3	VK_PRESENT_MODE_FIFO_RELAXED_KHR
+  2:        1	VK_PRESENT_MODE_MAILBOX_KHR
+  3:        0	VK_PRESENT_MODE_IMMEDIATE_KHR
+The Present Mode to use = 1
+vkCreateSwapchainKHR: Successful
+vkGetSwapchainImagesKHR - 0: Successful
+vkGetSwapchainImagesKHR - 1: Successful
+vkCreateImageView: Successful
+vkCreateImageView: Successful
+
+***** Init09DepthStencilImage *****
+vkCreateImage: Successful
+
+***** Found given memory flag (0x00000001) and type (0x000000a0): i = 7 *****
+vkAllocateMemory: Successful
+vkBindImageMemory: Successful
+vkCreateImageView: Successful
+
+***** Init10RenderPasses *****
+vkCreateRenderPass: Successful
+
+***** Init11Framebuffers *****
+vkCreateFrameBuffer - 0: Successful
+vkCreateFrameBuffer - 1: Successful
+
+***** Init12SpirvShader *****
+Cannot open shader file 'sample-vert.spv'
+
+***** Init12SpirvShader *****
+Cannot open shader file 'sample-frag.spv'
+
+***** Init13DescriptorSetPool *****
+vkCreateDescriptorPool: Successful
+
+***** Init13DescriptorSetLayouts *****
+vkCreateDescriptorSetLayout - 0: Successful
+vkCreateDescriptorSetLayout - 1: Successful
+vkCreateDescriptorSetLayout - 2: Successful
+vkCreateDescriptorSetLayout - 3: Successful
+vkCreateDescriptorSetLayout - 4: Successful
+
+***** Init13DescriptorSets *****
+vkAllocateDescriptorSets: Successful
+
+***** Init14GraphicsVertexFragmentPipeline *****
+vkCreatePipelineLayout: Successful
