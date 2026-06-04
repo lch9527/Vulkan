@@ -55,6 +55,7 @@
 
 #include <stdarg.h>
 #include <string.h>
+#include <inttypes.h>
 #include <string>
 #include <stdbool.h>
 #include <assert.h>
@@ -67,8 +68,14 @@
 #endif
 
 #ifndef _WIN32
+#include <errno.h>
 typedef int errno_t;
-int	fopen_s( FILE**, const char *, const char * ); 
+errno_t
+fopen_s( FILE **fp, const char *filename, const char *mode )
+{
+	*fp = fopen( filename, mode );
+	return *fp == NULL ? errno : 0;
+}
 #endif
 
 #define GLFW_INCLUDE_VULKAN
@@ -711,18 +718,19 @@ Init01Instance( )
 	{
 		// figure out what instance extensions are wanted and available:
 
-		const char * instanceExtensionsWanted[ ] =
-		{
-			"VK_KHR_surface",
-#ifdef _WIN32
-			"VK_KHR_win32_surface",
-#endif
-			"VK_EXT_debug_report",
-		};
-		uint32_t numExtensionsWanted = sizeof(instanceExtensionsWanted) / sizeof(char *);
+		std::vector<const char *> instanceExtensionsWanted;
 
-		fprintf(FpDebug, "\n%d Instance Extensions originally wanted:\n", numExtensionsWanted);
-		for (unsigned int i = 0; i < numExtensionsWanted; i++)
+		uint32_t glfwExtensionCount = 0;
+		const char ** glfwExtensions = glfwGetRequiredInstanceExtensions( &glfwExtensionCount );
+		for( uint32_t i = 0; i < glfwExtensionCount; i++ )
+		{
+			instanceExtensionsWanted.push_back( glfwExtensions[i] );
+		}
+
+		instanceExtensionsWanted.push_back( "VK_EXT_debug_report" );
+
+		fprintf(FpDebug, "\n%d Instance Extensions originally wanted:\n", (int) instanceExtensionsWanted.size( ) );
+		for (unsigned int i = 0; i < instanceExtensionsWanted.size( ); i++)
 		{
 			fprintf(FpDebug, "\t%s\n", instanceExtensionsWanted[i]);
 		}
@@ -751,7 +759,7 @@ Init01Instance( )
 		// look for extensions both on the wanted list and the available list:
 
 		extensionsWantedAndAvailable.clear( );
-		for( uint32_t wanted = 0; wanted < numExtensionsWanted; wanted++ )
+		for( uint32_t wanted = 0; wanted < instanceExtensionsWanted.size( ); wanted++ )
 		{
 			for( uint32_t available = 0; available < numExtensionsAvailable; available++ )
 			{
@@ -1261,8 +1269,8 @@ VK_SHARING_MODE_CONCURRENT
 	vkGetBufferMemoryRequirements( LogicalDevice, IN pMyBuffer->buffer, OUT &vmr );		// fills vmr
 	if( Verbose )
 	{
-		fprintf( FpDebug, "Buffer vmr.size = %lld\n", vmr.size );
-		fprintf( FpDebug, "Buffer vmr.alignment = %lld\n", vmr.alignment );
+		fprintf( FpDebug, "Buffer vmr.size = %" PRIu64 "\n", (uint64_t)vmr.size );
+		fprintf( FpDebug, "Buffer vmr.alignment = %" PRIu64 "\n", (uint64_t)vmr.alignment );
 		fprintf( FpDebug, "Buffer vmr.memoryTypeBits = 0x%08x\n", vmr.memoryTypeBits );
 		fflush( FpDebug );
 	}
@@ -1498,8 +1506,8 @@ VK_IMAGE_LAYOUT_PREINITIALIZED
 
 		if (Verbose)
 		{
-			fprintf(FpDebug, "Image vmr.size = %lld\n", vmr.size);
-			fprintf(FpDebug, "Image vmr.alignment = %lld\n", vmr.alignment);
+			fprintf(FpDebug, "Image vmr.size = %" PRIu64 "\n", (uint64_t)vmr.size);
+			fprintf(FpDebug, "Image vmr.alignment = %" PRIu64 "\n", (uint64_t)vmr.alignment);
 			fprintf(FpDebug, "Image vmr.memoryTypeBits = 0x%08x\n", vmr.memoryTypeBits);
 			fflush(FpDebug);
 		}
@@ -1532,11 +1540,11 @@ VK_IMAGE_LAYOUT_PREINITIALIZED
 		if (Verbose)
 		{
 			fprintf(FpDebug, "Subresource Layout:\n");
-			fprintf(FpDebug, "\toffset = %lld\n", vsl.offset);
-			fprintf(FpDebug, "\tsize = %lld\n", vsl.size);
-			fprintf(FpDebug, "\trowPitch = %lld\n", vsl.rowPitch);
-			fprintf(FpDebug, "\tarrayPitch = %lld\n", vsl.arrayPitch);
-			fprintf(FpDebug, "\tdepthPitch = %lld\n", vsl.depthPitch);
+			fprintf(FpDebug, "\toffset = %" PRIu64 "\n", (uint64_t)vsl.offset);
+			fprintf(FpDebug, "\tsize = %" PRIu64 "\n", (uint64_t)vsl.size);
+			fprintf(FpDebug, "\trowPitch = %" PRIu64 "\n", (uint64_t)vsl.rowPitch);
+			fprintf(FpDebug, "\tarrayPitch = %" PRIu64 "\n", (uint64_t)vsl.arrayPitch);
+			fprintf(FpDebug, "\tdepthPitch = %" PRIu64 "\n", (uint64_t)vsl.depthPitch);
 			fflush(FpDebug);
 		}
 
@@ -1595,8 +1603,8 @@ VK_IMAGE_LAYOUT_PREINITIALIZED
 
 		if( Verbose )
 		{
-			fprintf( FpDebug, "Texture vmr.size = %lld\n", vmr.size );
-			fprintf( FpDebug, "Texture vmr.alignment = %lld\n", vmr.alignment );
+			fprintf( FpDebug, "Texture vmr.size = %" PRIu64 "\n", (uint64_t)vmr.size );
+			fprintf( FpDebug, "Texture vmr.alignment = %" PRIu64 "\n", (uint64_t)vmr.alignment );
 			fprintf( FpDebug, "Texture vmr.memoryTypeBits = 0x%08x\n", vmr.memoryTypeBits );
 			fflush( FpDebug );
 		}
@@ -4185,7 +4193,7 @@ Reset( )
 	UseIndexBuffer = false;
 	UseLighting = false;
 	UseOrtho = false;
-	UseRotate = true;
+	UseRotate = false;
 	Verbose = true;
 	Xrot = Yrot = 0.;
 
