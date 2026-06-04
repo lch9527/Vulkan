@@ -15,10 +15,15 @@ Found 2 GLFW Required Instance Extensions:
 	VK_LAYER_NV_optimus
 vkEnumerateInstanceLayerProperties: Successful
 
-3 Instance Layers actually available:
-0x004030cd   1  'VK_LAYER_NV_optimus'  'NVIDIA Optimus layer'
+8 Instance Layers actually available:
+0x004030ed   1  'VK_LAYER_AMD_switchable_graphics'  'AMD switchable graphics layer'
+0x00404149   1  'VK_LAYER_NV_optimus'  'NVIDIA Optimus layer'
+0x00404149   1  'VK_LAYER_NV_present'  'NVIDIA Presentation Layer'
+0x00402088   1  'VK_LAYER_EOS_Overlay'  'Vulkan overlay layer for Epic Online Services'
+0x004030d8   1  'VK_LAYER_OBS_HOOK'  'Open Broadcaster Software hook'
 0x004030cf   1  'VK_LAYER_VALVE_steam_overlay'  'Steam Overlay Layer'
-0x004030cf   1  'VK_LAYER_VALVE_steam_fossilize'  'Steam Pipeline Caching Layer'
+0x0040412f   1  'VK_LAYER_VALVE_steam_fossilize'  'Steam Pipeline Caching Layer'
+0x00400046   1  'VK_LAYER_ROCKSTAR_GAMES_social_club'  'Rockstar Games Social Club Layer'
 
 Will now ask for 1 Instance Layers:
 	VK_LAYER_NV_optimus
@@ -29,23 +34,27 @@ Will now ask for 1 Instance Layers:
 	VK_EXT_debug_report
 vkEnumerateInstanceExtensionProperties: Successful
 
-16 Instance Extensions actually available:
+20 Instance Extensions actually available:
 0x00000001  'VK_KHR_device_group_creation'
-0x00000017  'VK_KHR_display'
 0x00000001  'VK_KHR_external_fence_capabilities'
 0x00000001  'VK_KHR_external_memory_capabilities'
 0x00000001  'VK_KHR_external_semaphore_capabilities'
-0x00000001  'VK_KHR_get_display_properties2'
 0x00000002  'VK_KHR_get_physical_device_properties2'
 0x00000001  'VK_KHR_get_surface_capabilities2'
 0x00000019  'VK_KHR_surface'
-0x00000001  'VK_KHR_surface_protected_capabilities'
 0x00000006  'VK_KHR_win32_surface'
 0x0000000a  'VK_EXT_debug_report'
 0x00000002  'VK_EXT_debug_utils'
-0x00000001  'VK_EXT_direct_mode_display'
 0x00000004  'VK_EXT_swapchain_colorspace'
+0x00000017  'VK_KHR_display'
+0x00000001  'VK_KHR_get_display_properties2'
+0x00000001  'VK_KHR_surface_maintenance1'
+0x00000001  'VK_KHR_surface_protected_capabilities'
+0x00000001  'VK_EXT_direct_mode_display'
+0x00000001  'VK_EXT_surface_maintenance1'
 0x00000001  'VK_NV_external_memory_capabilities'
+0x00000001  'VK_KHR_portability_enumeration'
+0x00000001  'VK_LUNARG_direct_driver_loading'
 
 Will now ask for 3 Instance Extensions
 	VK_KHR_surface
@@ -59,29 +68,49 @@ glfwCreateWindowSurface: Successful
 ***** Init03PhysicalDeviceAndGetQueueFamilyProperties *****
 vkEnumeratePhysicalDevices - 1: Successful
 
-2 physical devices found.
+4 physical devices found.
 vkEnumeratePhysicalDevices - 2: Successful
  
 
 Device  0:
-	API version: 4202647
-	Driver version: 4202647
-	Vendor ID: 0x8086
-	Device ID: 0x3e9b
+	API version: 4206829
+	Driver version: 4206829
+	Vendor ID: 0x1002
+	Device ID: 0x15bf
 	Physical Device Type: 1 = (Integrated GPU)
-	Device Name: Intel(R) UHD Graphics 630
-	Pipeline Cache Size: 40
+	Device Name: AMD Radeon(TM) 760M
+	Pipeline Cache Size: 108
  
 
 Device  1:
-	API version: 4206797
-	Driver version: 4206797
+	API version: 4211017
+	Driver version: 4211017
 	Vendor ID: 0x10de
-	Device ID: 0x1c8c
+	Device ID: 0x28e0
 	Physical Device Type: 2 = (Discrete GPU)
-	Device Name: NVIDIA GeForce GTX 1050 Ti with Max-Q Design
-	Pipeline Cache Size: 230
-Device #1 selected ('NVIDIA GeForce GTX 1050 Ti with Max-Q Design')
+	Device Name: NVIDIA GeForce RTX 4060 Laptop GPU
+	Pipeline Cache Size: 229
+ 
+
+Device  2:
+	API version: 4206829
+	Driver version: 4206829
+	Vendor ID: 0x1002
+	Device ID: 0x15bf
+	Physical Device Type: 1 = (Integrated GPU)
+	Device Name: AMD Radeon(TM) 760M
+	Pipeline Cache Size: 108
+ 
+
+Device  3:
+	API version: 4206829
+	Driver version: 4206829
+	Vendor ID: 0x1002
+	Device ID: 0x15bf
+	Physical Device Type: 1 = (Integrated GPU)
+	Device Name: AMD Radeon(TM) 760M
+	Pipeline Cache Size: 108
+Device #1 selected ('NVIDIA GeForce RTX 4060 Laptop GPU')
 
 Physical Device Features:
 geometryShader =  1
@@ -97,95 +126,387 @@ shaderInt64 =  1
 shaderInt16 =  1
 
 Image Formats Checked:
-Format VK_FORMAT_R32G32B32A32_SFLOAT: 0x0001d401 0x0001dd83  0x00000058
-Format VK_FORMAT_R8G8B8A8_UNORM: 0x0001d401 0x0001dd83  0x20000058
-Format VK_FORMAT_B8G8R8A8_UNORM: 0x0001d401 0x0001dd83  0x00000058
-Format VK_FORMAT_B8G8R8A8_SRGB: 0x0001d401 0x0001dd81  0x00000000
+Format VK_FORMAT_R32G32B32A32_SFLOAT: 0x0001dc03 0x0001dd83  0x00000058
+Format VK_FORMAT_R8G8B8A8_UNORM: 0x0001dc03 0x0001dd83  0x20000058
+Format VK_FORMAT_B8G8R8A8_UNORM: 0x0001dc03 0x0001dd83  0x00000058
+Format VK_FORMAT_B8G8R8A8_SRGB: 0x0001dc01 0x0001dd81  0x00000008
 
-11 Memory Types:
+5 Memory Types:
 Memory  0: 
-Memory  1: 
-Memory  2: 
-Memory  3: 
-Memory  4: 
-Memory  5: 
-Memory  6: 
-Memory  7:  DeviceLocal
-Memory  8:  HostVisible HostCoherent
-Memory  9:  HostVisible HostCoherent HostCached
-Memory 10:  DeviceLocal HostVisible HostCoherent
+Memory  1:  DeviceLocal
+Memory  2:  HostVisible HostCoherent
+Memory  3:  HostVisible HostCoherent HostCached
+Memory  4:  DeviceLocal HostVisible HostCoherent
 
-3 Memory Heaps:
-Heap 0:  size = 0xfb300000 DeviceLocal
-Heap 1:  size = 0xf1bef000
-Heap 2:  size = 0x0d600000 DeviceLocal
+2 Memory Heaps:
+Heap 0:  size = 0xf1400000 DeviceLocal
+Heap 1:  size = 0xe6246000
 
-Found 3 Queue Families:
+Found 6 Queue Families:
 	0: Queue Family Count = 16  ;    Graphics Compute Transfer
 	1: Queue Family Count =  2  ;    Transfer
 	2: Queue Family Count =  8  ;    Compute Transfer
+	3: Queue Family Count =  1  ;    Transfer
+	4: Queue Family Count =  1  ;    Transfer
+	5: Queue Family Count =  1  ;    Transfer
 
 ***** Init04LogicalDeviceAndQueue *****
 vkEnumerateDeviceLayerProperties: Successful
 
-2 physical device layers enumerated:
-0x004030cd   1  'VK_LAYER_NV_optimus'  'NVIDIA Optimus layer'
+4 physical device layers enumerated:
+0x004030ed   1  'VK_LAYER_AMD_switchable_graphics'  'AMD switchable graphics layer'
+vkEnumerateDeviceExtensionProperties: Successful
+	0 device extensions enumerated for 'VK_LAYER_AMD_switchable_graphics':
+
+0x00404149   1  'VK_LAYER_NV_optimus'  'NVIDIA Optimus layer'
 vkEnumerateDeviceExtensionProperties: Successful
 	0 device extensions enumerated for 'VK_LAYER_NV_optimus':
 
-0x004030cd   1  'VK_LAYER_NV_optimus'  'NVIDIA Optimus layer'
+0x00404149   1  'VK_LAYER_NV_present'  'NVIDIA Presentation Layer'
 vkEnumerateDeviceExtensionProperties: Successful
-	0 device extensions enumerated for 'VK_LAYER_NV_optimus':
+	0 device extensions enumerated for 'VK_LAYER_NV_present':
 
+0x004030d8   1  'VK_LAYER_OBS_HOOK'  'Open Broadcaster Software hook'
+vkEnumerateDeviceExtensionProperties: Successful
+	0 device extensions enumerated for 'VK_LAYER_OBS_HOOK':
+
+vkEnumerateDeviceExtensionProperties - global: Successful
+	274 global device extensions enumerated:
+	0x00000001  'VK_KHR_16bit_storage'
+	0x00000001  'VK_KHR_8bit_storage'
+	0x0000000d  'VK_KHR_acceleration_structure'
+	0x00000001  'VK_KHR_bind_memory2'
+	0x00000001  'VK_KHR_buffer_device_address'
+	0x00000001  'VK_KHR_calibrated_timestamps'
+	0x00000001  'VK_KHR_compute_shader_derivatives'
+	0x00000002  'VK_KHR_cooperative_matrix'
+	0x00000001  'VK_KHR_copy_commands2'
+	0x00000001  'VK_KHR_copy_memory_indirect'
+	0x00000001  'VK_KHR_create_renderpass2'
+	0x00000003  'VK_KHR_dedicated_allocation'
+	0x00000004  'VK_KHR_deferred_host_operations'
+	0x00000001  'VK_KHR_depth_clamp_zero_one'
+	0x00000001  'VK_KHR_depth_stencil_resolve'
+	0x00000001  'VK_KHR_descriptor_update_template'
+	0x00000004  'VK_KHR_device_group'
+	0x00000001  'VK_KHR_draw_indirect_count'
+	0x00000001  'VK_KHR_driver_properties'
+	0x00000001  'VK_KHR_dynamic_rendering'
+	0x00000001  'VK_KHR_dynamic_rendering_local_read'
+	0x00000001  'VK_KHR_external_fence'
+	0x00000001  'VK_KHR_external_fence_win32'
+	0x00000001  'VK_KHR_external_memory'
+	0x00000001  'VK_KHR_external_memory_win32'
+	0x00000001  'VK_KHR_external_semaphore'
+	0x00000001  'VK_KHR_external_semaphore_win32'
+	0x00000002  'VK_KHR_format_feature_flags2'
+	0x00000001  'VK_KHR_fragment_shader_barycentric'
+	0x00000002  'VK_KHR_fragment_shading_rate'
+	0x00000001  'VK_KHR_get_memory_requirements2'
+	0x00000001  'VK_KHR_global_priority'
+	0x00000001  'VK_KHR_image_format_list'
+	0x00000001  'VK_KHR_imageless_framebuffer'
+	0x00000001  'VK_KHR_index_type_uint8'
+	0x00000001  'VK_KHR_line_rasterization'
+	0x00000001  'VK_KHR_load_store_op_none'
+	0x00000002  'VK_KHR_maintenance1'
+	0x00000001  'VK_KHR_maintenance10'
+	0x00000001  'VK_KHR_maintenance2'
+	0x00000001  'VK_KHR_maintenance3'
+	0x00000002  'VK_KHR_maintenance4'
+	0x00000001  'VK_KHR_maintenance5'
+	0x00000001  'VK_KHR_maintenance6'
+	0x00000001  'VK_KHR_maintenance7'
+	0x00000001  'VK_KHR_maintenance8'
+	0x00000001  'VK_KHR_maintenance9'
+	0x00000001  'VK_KHR_map_memory2'
+	0x00000001  'VK_KHR_multiview'
+	0x00000001  'VK_KHR_pipeline_binary'
+	0x00000001  'VK_KHR_pipeline_executable_properties'
+	0x00000001  'VK_KHR_pipeline_library'
+	0x00000001  'VK_KHR_present_id'
+	0x00000001  'VK_KHR_present_id2'
+	0x00000001  'VK_KHR_present_mode_fifo_latest_ready'
+	0x00000001  'VK_KHR_present_wait'
+	0x00000001  'VK_KHR_present_wait2'
+	0x00000002  'VK_KHR_push_descriptor'
+	0x00000001  'VK_KHR_ray_query'
+	0x00000001  'VK_KHR_ray_tracing_maintenance1'
+	0x00000001  'VK_KHR_ray_tracing_pipeline'
+	0x00000001  'VK_KHR_ray_tracing_position_fetch'
+	0x00000001  'VK_KHR_relaxed_block_layout'
+	0x00000001  'VK_KHR_robustness2'
+	0x00000003  'VK_KHR_sampler_mirror_clamp_to_edge'
+	0x0000000e  'VK_KHR_sampler_ycbcr_conversion'
+	0x00000001  'VK_KHR_separate_depth_stencil_layouts'
+	0x00000001  'VK_KHR_shader_atomic_int64'
+	0x00000001  'VK_KHR_shader_bfloat16'
+	0x00000001  'VK_KHR_shader_clock'
+	0x00000001  'VK_KHR_shader_draw_parameters'
+	0x00000001  'VK_KHR_shader_expect_assume'
+	0x00000001  'VK_KHR_shader_float16_int8'
+	0x00000004  'VK_KHR_shader_float_controls'
+	0x00000001  'VK_KHR_shader_float_controls2'
+	0x00000001  'VK_KHR_shader_fma'
+	0x00000001  'VK_KHR_shader_integer_dot_product'
+	0x00000001  'VK_KHR_shader_maximal_reconvergence'
+	0x00000001  'VK_KHR_shader_non_semantic_info'
+	0x00000001  'VK_KHR_shader_quad_control'
+	0x00000001  'VK_KHR_shader_relaxed_extended_instruction'
+	0x00000001  'VK_KHR_shader_subgroup_extended_types'
+	0x00000002  'VK_KHR_shader_subgroup_rotate'
+	0x00000001  'VK_KHR_shader_subgroup_uniform_control_flow'
+	0x00000001  'VK_KHR_shader_terminate_invocation'
+	0x00000001  'VK_KHR_shader_untyped_pointers'
+	0x00000001  'VK_KHR_spirv_1_4'
+	0x00000001  'VK_KHR_storage_buffer_storage_class'
+	0x00000046  'VK_KHR_swapchain'
+	0x00000001  'VK_KHR_swapchain_maintenance1'
+	0x00000001  'VK_KHR_swapchain_mutable_format'
+	0x00000001  'VK_KHR_synchronization2'
+	0x00000002  'VK_KHR_timeline_semaphore'
+	0x00000001  'VK_KHR_unified_image_layouts'
+	0x00000001  'VK_KHR_uniform_buffer_standard_layout'
+	0x00000001  'VK_KHR_variable_pointers'
+	0x00000001  'VK_KHR_vertex_attribute_divisor'
+	0x00000001  'VK_KHR_video_decode_av1'
+	0x00000009  'VK_KHR_video_decode_h264'
+	0x00000008  'VK_KHR_video_decode_h265'
+	0x00000008  'VK_KHR_video_decode_queue'
+	0x00000001  'VK_KHR_video_decode_vp9'
+	0x00000001  'VK_KHR_video_encode_av1'
+	0x0000000e  'VK_KHR_video_encode_h264'
+	0x0000000e  'VK_KHR_video_encode_h265'
+	0x00000001  'VK_KHR_video_encode_intra_refresh'
+	0x00000002  'VK_KHR_video_encode_quantization_map'
+	0x0000000c  'VK_KHR_video_encode_queue'
+	0x00000001  'VK_KHR_video_maintenance1'
+	0x00000001  'VK_KHR_video_maintenance2'
+	0x00000008  'VK_KHR_video_queue'
+	0x00000003  'VK_KHR_vulkan_memory_model'
+	0x00000001  'VK_KHR_win32_keyed_mutex'
+	0x00000001  'VK_KHR_workgroup_memory_explicit_layout'
+	0x00000001  'VK_KHR_zero_initialize_workgroup_memory'
+	0x00000001  'VK_EXT_4444_formats'
+	0x00000001  'VK_EXT_attachment_feedback_loop_dynamic_state'
+	0x00000002  'VK_EXT_attachment_feedback_loop_layout'
+	0x00000002  'VK_EXT_blend_operation_advanced'
+	0x00000001  'VK_EXT_border_color_swizzle'
+	0x00000002  'VK_EXT_buffer_device_address'
+	0x00000002  'VK_EXT_calibrated_timestamps'
+	0x00000001  'VK_EXT_color_write_enable'
+	0x00000002  'VK_EXT_conditional_rendering'
+	0x00000001  'VK_EXT_conservative_rasterization'
+	0x0000000c  'VK_EXT_custom_border_color'
+	0x00000001  'VK_EXT_custom_resolve'
+	0x00000001  'VK_EXT_depth_bias_control'
+	0x00000001  'VK_EXT_depth_clamp_control'
+	0x00000001  'VK_EXT_depth_clamp_zero_one'
+	0x00000001  'VK_EXT_depth_clip_control'
+	0x00000001  'VK_EXT_depth_clip_enable'
+	0x00000001  'VK_EXT_depth_range_unrestricted'
+	0x00000001  'VK_EXT_descriptor_buffer'
+	0x00000001  'VK_EXT_descriptor_heap'
+	0x00000002  'VK_EXT_descriptor_indexing'
+	0x00000001  'VK_EXT_device_address_binding_report'
+	0x00000002  'VK_EXT_device_fault'
+	0x00000001  'VK_EXT_device_generated_commands'
+	0x00000002  'VK_EXT_discard_rectangles'
+	0x00000001  'VK_EXT_dynamic_rendering_unused_attachments'
+	0x00000001  'VK_EXT_extended_dynamic_state'
+	0x00000001  'VK_EXT_extended_dynamic_state2'
+	0x00000002  'VK_EXT_extended_dynamic_state3'
+	0x00000001  'VK_EXT_external_memory_host'
+	0x00000001  'VK_EXT_fragment_shader_interlock'
+	0x00000004  'VK_EXT_full_screen_exclusive'
+	0x00000002  'VK_EXT_global_priority'
+	0x00000001  'VK_EXT_global_priority_query'
+	0x00000001  'VK_EXT_graphics_pipeline_library'
+	0x00000003  'VK_EXT_hdr_metadata'
+	0x00000001  'VK_EXT_host_image_copy'
+	0x00000001  'VK_EXT_host_query_reset'
+	0x00000001  'VK_EXT_image_2d_view_of_3d'
+	0x00000001  'VK_EXT_image_robustness'
+	0x00000001  'VK_EXT_image_sliced_view_of_3d'
+	0x00000001  'VK_EXT_image_view_min_lod'
+	0x00000001  'VK_EXT_index_type_uint8'
+	0x00000001  'VK_EXT_inline_uniform_block'
+	0x00000001  'VK_EXT_legacy_vertex_attributes'
+	0x00000001  'VK_EXT_line_rasterization'
+	0x00000001  'VK_EXT_load_store_op_none'
+	0x00000001  'VK_EXT_memory_budget'
+	0x00000001  'VK_EXT_memory_decompression'
+	0x00000001  'VK_EXT_memory_priority'
+	0x00000001  'VK_EXT_mesh_shader'
+	0x00000001  'VK_EXT_multi_draw'
+	0x00000001  'VK_EXT_mutable_descriptor_type'
+	0x00000001  'VK_EXT_nested_command_buffer'
+	0x00000001  'VK_EXT_non_seamless_cube_map'
+	0x00000002  'VK_EXT_opacity_micromap'
+	0x00000001  'VK_EXT_pageable_device_local_memory'
+	0x00000002  'VK_EXT_pci_bus_info'
+	0x00000003  'VK_EXT_pipeline_creation_cache_control'
+	0x00000001  'VK_EXT_pipeline_creation_feedback'
+	0x00000001  'VK_EXT_pipeline_library_group_handles'
+	0x00000001  'VK_EXT_pipeline_robustness'
+	0x00000001  'VK_EXT_post_depth_coverage'
+	0x00000001  'VK_EXT_present_mode_fifo_latest_ready'
+	0x00000003  'VK_EXT_present_timing'
+	0x00000001  'VK_EXT_primitive_topology_list_restart'
+	0x00000001  'VK_EXT_primitives_generated_query'
+	0x00000001  'VK_EXT_private_data'
+	0x00000001  'VK_EXT_provoking_vertex'
+	0x00000001  'VK_EXT_queue_family_foreign'
+	0x00000001  'VK_EXT_ray_tracing_invocation_reorder'
+	0x00000001  'VK_EXT_robustness2'
+	0x00000001  'VK_EXT_sample_locations'
+	0x00000002  'VK_EXT_sampler_filter_minmax'
+	0x00000001  'VK_EXT_scalar_block_layout'
+	0x00000001  'VK_EXT_separate_stencil_usage'
+	0x00000001  'VK_EXT_shader_64bit_indexing'
+	0x00000001  'VK_EXT_shader_atomic_float'
+	0x00000001  'VK_EXT_shader_demote_to_helper_invocation'
+	0x00000001  'VK_EXT_shader_float8'
+	0x00000001  'VK_EXT_shader_image_atomic_int64'
+	0x00000001  'VK_EXT_shader_module_identifier'
+	0x00000001  'VK_EXT_shader_object'
+	0x00000001  'VK_EXT_shader_replicated_composites'
+	0x00000001  'VK_EXT_shader_subgroup_ballot'
+	0x00000001  'VK_EXT_shader_subgroup_vote'
+	0x00000001  'VK_EXT_shader_uniform_buffer_unsized_array'
+	0x00000001  'VK_EXT_shader_viewport_index_layer'
+	0x00000002  'VK_EXT_subgroup_size_control'
+	0x00000001  'VK_EXT_swapchain_maintenance1'
+	0x00000001  'VK_EXT_texel_buffer_alignment'
+	0x00000001  'VK_EXT_tooling_info'
+	0x00000001  'VK_EXT_transform_feedback'
+	0x00000003  'VK_EXT_vertex_attribute_divisor'
+	0x00000001  'VK_EXT_vertex_attribute_robustness'
+	0x00000002  'VK_EXT_vertex_input_dynamic_state'
+	0x00000001  'VK_EXT_ycbcr_2plane_444_formats'
+	0x00000001  'VK_EXT_ycbcr_image_arrays'
+	0x00000001  'VK_EXT_zero_initialize_device_memory'
+	0x00000001  'VK_NV_acquire_winrt_display'
+	0x00000001  'VK_NV_clip_space_w_scaling'
+	0x00000004  'VK_NV_cluster_acceleration_structure'
+	0x00000001  'VK_NV_compute_occupancy_priority'
+	0x00000001  'VK_NV_compute_shader_derivatives'
+	0x00000001  'VK_NV_cooperative_matrix'
+	0x00000001  'VK_NV_cooperative_matrix2'
+	0x00000004  'VK_NV_cooperative_vector'
+	0x00000001  'VK_NV_copy_memory_indirect'
+	0x00000002  'VK_NV_corner_sampled_image'
+	0x00000001  'VK_NV_coverage_reduction_mode'
+	0x00000002  'VK_NV_cuda_kernel_launch'
+	0x00000001  'VK_NV_dedicated_allocation'
+	0x00000001  'VK_NV_dedicated_allocation_image_aliasing'
+	0x00000001  'VK_NV_descriptor_pool_overallocation'
+	0x00000002  'VK_NV_device_diagnostic_checkpoints'
+	0x00000002  'VK_NV_device_diagnostics_config'
+	0x00000003  'VK_NV_device_generated_commands'
+	0x00000002  'VK_NV_device_generated_commands_compute'
+	0x00000001  'VK_NV_disk_cache_utils'
+	0x00000001  'VK_NV_external_compute_queue'
+	0x00000001  'VK_NV_external_memory'
+	0x00000001  'VK_NV_external_memory_win32'
+	0x00000001  'VK_NV_fill_rectangle'
+	0x00000001  'VK_NV_fragment_coverage_to_color'
+	0x00000001  'VK_NV_fragment_shader_barycentric'
+	0x00000001  'VK_NV_fragment_shading_rate_enums'
+	0x00000001  'VK_NV_framebuffer_mixed_samples'
+	0x00000001  'VK_NV_geometry_shader_passthrough'
+	0x00000001  'VK_NV_inherited_viewport_scissor'
+	0x00000001  'VK_NV_internal_nvpresent'
+	0x00000001  'VK_NV_linear_color_attachment'
+	0x00000001  'VK_NV_low_latency'
+	0x00000002  'VK_NV_low_latency2'
+	0x00000001  'VK_NV_memory_decompression'
+	0x00000001  'VK_NV_mesh_shader'
+	0x00000001  'VK_NV_optical_flow'
+	0x00000001  'VK_NV_partitioned_acceleration_structure'
+	0x00000001  'VK_NV_present_metering'
+	0x00000001  'VK_NV_raw_access_chains'
+	0x00000003  'VK_NV_ray_tracing'
+	0x00000001  'VK_NV_ray_tracing_invocation_reorder'
+	0x00000001  'VK_NV_ray_tracing_motion_blur'
+	0x00000002  'VK_NV_representative_fragment_test'
+	0x00000001  'VK_NV_sample_mask_override_coverage'
+	0x00000002  'VK_NV_scissor_exclusive'
+	0x00000001  'VK_NV_shader_atomic_float16_vector'
+	0x00000002  'VK_NV_shader_image_footprint'
+	0x00000001  'VK_NV_shader_sm_builtins'
+	0x00000001  'VK_NV_shader_subgroup_partitioned'
+	0x00000003  'VK_NV_shading_rate_image'
+	0x00000001  'VK_NV_viewport_array2'
+	0x00000001  'VK_NV_viewport_swizzle'
+	0x00000002  'VK_NV_win32_keyed_mutex'
+	0x00000002  'VK_NVX_binary_import'
+	0x00000004  'VK_NVX_image_view_handle'
+	0x00000001  'VK_NVX_multiview_per_view_attributes'
+	0x00000001  'VK_AMD_buffer_marker'
+	0x00000001  'VK_GOOGLE_hlsl_functionality1'
+	0x00000001  'VK_GOOGLE_user_type'
+Ray tracing shaderGroupHandleSize = 32
+Ray tracing shaderGroupBaseAlignment = 64
 vkCreateLogicalDevice: Successful
 
 ***** Init05DataBuffer *****
 vkCreateBuffer: Successful
-Buffer vmr.size = 256
-Buffer vmr.alignment = 256
-Buffer vmr.memoryTypeBits = 0x00000781
+Buffer vmr.size = 64
+Buffer vmr.alignment = 64
+Buffer vmr.memoryTypeBits = 0x0000001f
 
-***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
 vkAllocateMemory: Successful
 vkBindBufferMemory: Successful
 
 ***** Init05DataBuffer *****
 vkCreateBuffer: Successful
 Buffer vmr.size = 256
-Buffer vmr.alignment = 256
-Buffer vmr.memoryTypeBits = 0x00000781
+Buffer vmr.alignment = 64
+Buffer vmr.memoryTypeBits = 0x0000001f
 
-***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
+vkAllocateMemory: Successful
+vkBindBufferMemory: Successful
+
+***** Init05DataBuffer *****
+vkCreateBuffer: Successful
+Buffer vmr.size = 192
+Buffer vmr.alignment = 64
+Buffer vmr.memoryTypeBits = 0x0000001f
+
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
+vkAllocateMemory: Successful
+vkBindBufferMemory: Successful
+
+***** Init05DataBuffer *****
+vkCreateBuffer: Successful
+Buffer vmr.size = 384
+Buffer vmr.alignment = 64
+Buffer vmr.memoryTypeBits = 0x0000001f
+
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
 vkAllocateMemory: Successful
 vkBindBufferMemory: Successful
 
 ***** Init05DataBuffer *****
 vkCreateBuffer: Successful
 Buffer vmr.size = 256
-Buffer vmr.alignment = 256
-Buffer vmr.memoryTypeBits = 0x00000781
+Buffer vmr.alignment = 64
+Buffer vmr.memoryTypeBits = 0x0000001f
 
-***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
 vkAllocateMemory: Successful
 vkBindBufferMemory: Successful
 
 ***** Init05DataBuffer *****
 vkCreateBuffer: Successful
-Buffer vmr.size = 512
+Buffer vmr.size = 100352
 Buffer vmr.alignment = 256
-Buffer vmr.memoryTypeBits = 0x00000781
+Buffer vmr.memoryTypeBits = 0x0000001f
 
-***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
-vkAllocateMemory: Successful
-vkBindBufferMemory: Successful
-
-***** Init05DataBuffer *****
-vkCreateBuffer: Successful
-Buffer vmr.size = 100320
-Buffer vmr.alignment = 16
-Buffer vmr.memoryTypeBits = 0x00000781
-
-***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
 vkAllocateMemory: Successful
 vkBindBufferMemory: Successful
 InitDataBuffer: Successful
@@ -208,9 +529,9 @@ Image size found: 1488 x 1484
 vkCreateImage: Successful
 Image vmr.size = 8832768
 Image vmr.alignment = 32
-Image vmr.memoryTypeBits = 0x00000781
+Image vmr.memoryTypeBits = 0x0000001f
 
-***** Found given memory flag (0x00000002) and type (0x00000781): i = 8 *****
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
 vkAllocateMemory: Successful
 vkBindImageMemory: Successful
 Subresource Layout:
@@ -222,9 +543,9 @@ Subresource Layout:
 vkCreateImage: Successful
 Texture vmr.size = 9142272
 Texture vmr.alignment = 1024
-Texture vmr.memoryTypeBits = 0x00000082
+Texture vmr.memoryTypeBits = 0x00000003
 
-***** Found given memory flag (0x00000001) and type (0x00000082): i = 7 *****
+***** Found given memory flag (0x00000001) and type (0x00000003): i = 1 *****
 vkAllocateMemory: Successful
 vkBindImageMemory: Successful
 Init07TextureBuffer -- vkBeginCommandBuffer: Successful
@@ -244,22 +565,24 @@ vkGetPhysicalDeviceSurfaceCapabilitiesKHR:
 	maxImageArrayLayers = 1
 	supportedTransforms = 0x0001
 	currentTransform = 0x0001
-	supportedCompositeAlpha = 0x0001
+	supportedCompositeAlpha = 0x0003
 	supportedUsageFlags = 0x009f
 vkGetPhysicalDeviceSurfaceSupportKHR: Successful
 ** This Surface is supported by the Graphics Queue **
 
-Found 3 Surface Formats:
+Found 5 Surface Formats:
   0:       44                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
   1:       50                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
-  2:       64                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+  2:       37                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+  3:       43                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+  4:       64                0	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
 
-Found 4 Present Modes:
+Found 5 Present Modes:
   0:        2	VK_PRESENT_MODE_FIFO_KHR
   1:        3	VK_PRESENT_MODE_FIFO_RELAXED_KHR
   2:        1	VK_PRESENT_MODE_MAILBOX_KHR
   3:        0	VK_PRESENT_MODE_IMMEDIATE_KHR
-The Present Mode to use = 1
+  4:     1000361000The Present Mode to use = 1
 vkCreateSwapchainKHR: Successful
 vkGetSwapchainImagesKHR - 0: Successful
 vkGetSwapchainImagesKHR - 1: Successful
@@ -269,7 +592,7 @@ vkCreateImageView: Successful
 ***** Init09DepthStencilImage *****
 vkCreateImage: Successful
 
-***** Found given memory flag (0x00000001) and type (0x000000a0): i = 7 *****
+***** Found given memory flag (0x00000001) and type (0x00000003): i = 1 *****
 vkAllocateMemory: Successful
 vkBindImageMemory: Successful
 vkCreateImageView: Successful
@@ -282,10 +605,12 @@ vkCreateFrameBuffer - 0: Successful
 vkCreateFrameBuffer - 1: Successful
 
 ***** Init12SpirvShader *****
-Cannot open shader file 'sample-vert.spv'
+vkCreateShaderModule: Successful
+Shader Module 'sample-vert.spv' successfully loaded
 
 ***** Init12SpirvShader *****
-Cannot open shader file 'sample-frag.spv'
+vkCreateShaderModule: Successful
+Shader Module 'sample-frag.spv' successfully loaded
 
 ***** Init13DescriptorSetPool *****
 vkCreateDescriptorPool: Successful
@@ -302,3 +627,4080 @@ vkAllocateDescriptorSets: Successful
 
 ***** Init14GraphicsVertexFragmentPipeline *****
 vkCreatePipelineLayout: Successful
+vkCreateGraphicsPipelines: Successful
+
+***** Init15RayTracing *****
+RayOutput -- vkCreateImage: Successful
+
+***** Found given memory flag (0x00000001) and type (0x00000003): i = 1 *****
+RayOutput -- vkAllocateMemory: Successful
+RayOutput -- vkBindImageMemory: Successful
+RayOutput -- vkCreateImageView: Successful
+CreateDeviceAddressBuffer -- vkCreateBuffer: Successful
+
+***** Found given memory flag (0x00000001) and type (0x0000001f): i = 1 *****
+CreateDeviceAddressBuffer -- vkAllocateMemory: Successful
+CreateDeviceAddressBuffer -- vkBindBufferMemory: Successful
+vkCreateAccelerationStructureKHR: Successful
+CreateDeviceAddressBuffer -- vkCreateBuffer: Successful
+
+***** Found given memory flag (0x00000001) and type (0x0000001f): i = 1 *****
+CreateDeviceAddressBuffer -- vkAllocateMemory: Successful
+CreateDeviceAddressBuffer -- vkBindBufferMemory: Successful
+CreateDeviceAddressBuffer -- vkCreateBuffer: Successful
+
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
+CreateDeviceAddressBuffer -- vkAllocateMemory: Successful
+CreateDeviceAddressBuffer -- vkBindBufferMemory: Successful
+CreateDeviceAddressBuffer -- vkCreateBuffer: Successful
+
+***** Found given memory flag (0x00000001) and type (0x0000001f): i = 1 *****
+CreateDeviceAddressBuffer -- vkAllocateMemory: Successful
+CreateDeviceAddressBuffer -- vkBindBufferMemory: Successful
+vkCreateAccelerationStructureKHR: Successful
+CreateDeviceAddressBuffer -- vkCreateBuffer: Successful
+
+***** Found given memory flag (0x00000001) and type (0x0000001f): i = 1 *****
+CreateDeviceAddressBuffer -- vkAllocateMemory: Successful
+CreateDeviceAddressBuffer -- vkBindBufferMemory: Successful
+AS build -- vkQueueSubmit: Successful
+UpdateRayTracingInstances -- vkQueueSubmit: Successful
+Ray -- vkCreateDescriptorPool: Successful
+Ray -- vkCreateDescriptorSetLayout: Successful
+Ray -- vkAllocateDescriptorSets: Successful
+
+***** Init12SpirvShader *****
+vkCreateShaderModule: Successful
+Shader Module 'raygen.spv' successfully loaded
+
+***** Init12SpirvShader *****
+vkCreateShaderModule: Successful
+Shader Module 'miss.spv' successfully loaded
+
+***** Init12SpirvShader *****
+vkCreateShaderModule: Successful
+Shader Module 'closesthit.spv' successfully loaded
+Ray -- vkCreatePipelineLayout: Successful
+vkCreateRayTracingPipelinesKHR: Successful
+vkGetRayTracingShaderGroupHandlesKHR: Successful
+CreateDeviceAddressBuffer -- vkCreateBuffer: Successful
+
+***** Found given memory flag (0x00000002) and type (0x0000001f): i = 2 *****
+CreateDeviceAddressBuffer -- vkAllocateMemory: Successful
+CreateDeviceAddressBuffer -- vkBindBufferMemory: Successful
+Ray tracing path: enabled
+
+***** RenderScene *****
+nextImageIndex = 0
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+
+***** RenderScene *****
+nextImageIndex = 1
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Unknown key hit: 0x0053 = 'S'
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Unknown key hit: 0x0044 = 'D'
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Unknown key hit: 0x0057 = 'W'
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Unknown key hit: 0x0044 = 'D'
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Unknown key hit: 0x0053 = 'S'
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Unknown key hit: 0x0154 = 'T'
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Unknown key hit: 0x0157 = 'W'
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Ray -- vkQueueSubmit: Successful
+Ray -- vkQueuePresentKHR: Successful
+Closing the GLFW window
+vkWaitIdle: Successful

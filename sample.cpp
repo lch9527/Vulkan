@@ -116,6 +116,7 @@ fopen_s( FILE **fp, const char *filename, const char *mode )
 
 #define DEBUGFILE		"VulkanDebug.txt"
 #define nullptr			(void *)NULL
+#undef nullptr
 #define MILLION			1000000L
 #define BILLION			1000000000L
 #define TEXTURE_COUNT		1
@@ -231,6 +232,21 @@ typedef struct MyTexture
 	VkDeviceMemory			vdm;
 } MyTexture;
 
+typedef struct MyRayImage
+{
+	VkImage				image;
+	VkImageView			imageView;
+	VkDeviceMemory			vdm;
+	VkFormat			format;
+} MyRayImage;
+
+typedef struct MyAccelerationStructure
+{
+	VkAccelerationStructureKHR	handle;
+	MyBuffer			buffer;
+	VkDeviceAddress		deviceAddress;
+} MyAccelerationStructure;
+
 
 //************************P4
 #include "vkuSphere.h"
@@ -300,6 +316,18 @@ struct objectBuf
 	float		uShininess;
 };
 
+struct raySceneBuf
+{
+	glm::vec4	uCameraPos;
+	glm::vec4	uCameraForward;
+	glm::vec4	uCameraRight;
+	glm::vec4	uCameraUp;
+	glm::vec4	uLightPos[4];
+	glm::vec4	uLightColor[4];
+	glm::vec4	uLightControl;		// x = selected light, y = lights enabled
+	glm::vec4	uMolecule;		// x = vertical offset, y = rotation angle
+};
+
 
 
 
@@ -364,6 +392,9 @@ VkSemaphore			SemaphoreImageAvailable;
 VkSemaphore			SemaphoreRenderFinished;
 VkShaderModule			ShaderModuleFragment;
 VkShaderModule			ShaderModuleVertex;
+VkShaderModule			ShaderModuleRayGen;
+VkShaderModule			ShaderModuleRayMiss;
+VkShaderModule			ShaderModuleRayClosestHit;
 VkBuffer			StagingBuffer;
 VkDeviceMemory			StagingBufferMemory;
 VkSurfaceKHR			Surface;
@@ -374,6 +405,37 @@ VkDeviceMemory			TextureImageMemory;
 VkCommandPool			TransferCommandPool;
 VkDebugReportCallbackEXT	WarningCallback;
 uint32_t			Width;
+
+bool				RayTracingAvailable;
+bool				RayTracingEnabled;
+MyRayImage			RayOutputImage;
+bool				RayOutputImageInGeneralLayout;
+VkDescriptorPool		RayDescriptorPool;
+VkDescriptorSetLayout		RayDescriptorSetLayout;
+VkDescriptorSet			RayDescriptorSet;
+VkPipelineLayout		RayPipelineLayout;
+VkPipeline			RayPipeline;
+MyAccelerationStructure		BottomLevelAS;
+MyAccelerationStructure		TopLevelAS;
+MyBuffer			RayInstanceBuffer;
+MyBuffer			RayShaderBindingTable;
+MyBuffer			MyRaySceneUniformBuffer;
+MyBuffer			RayTlasScratchBuffer;
+VkStridedDeviceAddressRegionKHR	RaygenSBTRegion;
+VkStridedDeviceAddressRegionKHR	MissSBTRegion;
+VkStridedDeviceAddressRegionKHR	HitSBTRegion;
+VkStridedDeviceAddressRegionKHR	CallableSBTRegion;
+VkPhysicalDeviceRayTracingPipelinePropertiesKHR RayTracingPipelineProperties;
+
+PFN_vkGetBufferDeviceAddressKHR			pfnVkGetBufferDeviceAddressKHR;
+PFN_vkCreateAccelerationStructureKHR		pfnVkCreateAccelerationStructureKHR;
+PFN_vkDestroyAccelerationStructureKHR		pfnVkDestroyAccelerationStructureKHR;
+PFN_vkGetAccelerationStructureBuildSizesKHR	pfnVkGetAccelerationStructureBuildSizesKHR;
+PFN_vkGetAccelerationStructureDeviceAddressKHR	pfnVkGetAccelerationStructureDeviceAddressKHR;
+PFN_vkCmdBuildAccelerationStructuresKHR		pfnVkCmdBuildAccelerationStructuresKHR;
+PFN_vkCreateRayTracingPipelinesKHR		pfnVkCreateRayTracingPipelinesKHR;
+PFN_vkGetRayTracingShaderGroupHandlesKHR	pfnVkGetRayTracingShaderGroupHandlesKHR;
+PFN_vkCmdTraceRaysKHR				pfnVkCmdTraceRaysKHR;
 
 
 //#include "SampleVertexData.cpp"
@@ -417,6 +479,15 @@ bool				UseIndexBuffer;			// true = use both vertex and index buffer, false = ju
 bool				UseOrtho;			// false = perspective, true = orthographic
 bool				UseLighting;			// true = use lighting for display
 bool				UseRotate;			// true = rotate-animate, false = use mouse for interaction
+struct raySceneBuf		RayScene;
+glm::vec3			CameraPos;
+float				CameraYaw;
+float				CameraPitch;
+glm::vec3			MovingLightPos[4];
+int				SelectedLight;
+bool				PointLightsEnabled;
+bool				FirstMouseLook;
+float				RayMoleculeRotation;
 
 
 
@@ -478,6 +549,24 @@ VkResult			Init14GraphicsPipelineLayout( );
 VkResult			Init14GraphicsVertexFragmentPipeline( VkShaderModule, VkShaderModule, VkPrimitiveTopology, OUT VkPipeline * );
 VkResult			Init14ComputePipeline( VkShaderModule, OUT VkPipeline * );
 
+VkResult			Init15RayTracing( );
+VkResult			Init15LoadRayTracingFunctions( );
+VkResult			Init15RayOutputImage( );
+VkResult			Init15AccelerationStructures( );
+VkResult			Init15RayTracingDescriptors( );
+VkResult			Init15RayTracingPipeline( );
+VkResult			Init15ShaderBindingTable( );
+VkResult			UpdateRayTracingInstances( float );
+VkResult			RenderRayTracedScene( uint32_t, VkSemaphore );
+VkResult			CreateDeviceAddressBuffer( VkDeviceSize, VkBufferUsageFlags, VkMemoryPropertyFlags, OUT MyBuffer * );
+VkResult			CreateAccelerationStructureObject( VkAccelerationStructureTypeKHR, VkDeviceSize, OUT MyAccelerationStructure * );
+VkDeviceAddress			GetBufferDeviceAddress( VkBuffer );
+uint32_t			AlignedSize( uint32_t, uint32_t );
+	float				AtomRadius( int );
+
+#define RAY_REFLECTION_SPHERE_INDEX	NUMATOMS
+#define RAY_INSTANCE_COUNT		(NUMATOMS + 1)
+#define RAY_MOLECULE_Y_OFFSET		2.2f
 
 VkResult			RenderScene( );
 void				UpdateScene( );
@@ -586,6 +675,9 @@ InitGraphics( )
 	Fill05DataBuffer( MyAtomsUniformBuffer,	(void *) &Atoms );
 //************************P4
 
+	Init05UniformBuffer( sizeof(RayScene),	&MyRaySceneUniformBuffer );
+	Fill05DataBuffer( MyRaySceneUniformBuffer, (void *) &RayScene );
+
 //************************P4
 	MyVertexDataBuffer = vkuSphere( 1., 20, 20 );
 //************************P4
@@ -621,6 +713,12 @@ InitGraphics( )
 	Init13DescriptorSets( );
 
 	Init14GraphicsVertexFragmentPipeline( ShaderModuleVertex, ShaderModuleFragment, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, &GraphicsPipeline  );
+
+	VkResult rayResult = Init15RayTracing( );
+	RayTracingEnabled = ( rayResult == VK_SUCCESS );
+	if( RayTracingEnabled )
+		glfwSetInputMode( MainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED );
+	fprintf( FpDebug, "Ray tracing path: %s\n", RayTracingEnabled ? "enabled" : "disabled -- using raster path" );
 }
 
 
@@ -1141,10 +1239,19 @@ Init04LogicalDeviceAndQueue( )
 		"VK_LAYER_LUNARG_parameter_validation",
 	};
 
-	const char * myDeviceExtensions[ ] =
+	std::vector<const char *> myDeviceExtensions;
+	myDeviceExtensions.push_back( VK_KHR_SWAPCHAIN_EXTENSION_NAME );
+
+	const char * rayTracingExtensions[ ] =
 	{
-		"VK_KHR_swapchain",
+		VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME,
+		VK_KHR_RAY_TRACING_PIPELINE_EXTENSION_NAME,
+		VK_KHR_DEFERRED_HOST_OPERATIONS_EXTENSION_NAME,
+		VK_KHR_BUFFER_DEVICE_ADDRESS_EXTENSION_NAME,
 	};
+	bool rayTracingExtensionsAvailable[ ARRAY_SIZE(rayTracingExtensions) ];
+	for( unsigned int i = 0; i < ARRAY_SIZE(rayTracingExtensions); i++ )
+		rayTracingExtensionsAvailable[i] = false;
 
 
 	// see what device layers are available:
@@ -1191,12 +1298,79 @@ Init04LogicalDeviceAndQueue( )
 		fprintf(FpDebug, "\n");
 	}
 
+	uint32_t globalExtensionCount;
+	vkEnumerateDeviceExtensionProperties( PhysicalDevice, (char *)nullptr, &globalExtensionCount, (VkExtensionProperties *)nullptr );
+	VkExtensionProperties * globalDeviceExtensions = new VkExtensionProperties[globalExtensionCount];
+	result = vkEnumerateDeviceExtensionProperties( PhysicalDevice, (char *)nullptr, &globalExtensionCount, globalDeviceExtensions );
+	REPORT("vkEnumerateDeviceExtensionProperties - global");
+	fprintf(FpDebug, "\t%d global device extensions enumerated:\n", globalExtensionCount);
+	for( unsigned int i = 0; i < globalExtensionCount; i++ )
+	{
+		fprintf(FpDebug, "\t0x%08x  '%s'\n", globalDeviceExtensions[i].specVersion, globalDeviceExtensions[i].extensionName);
+		for( unsigned int wanted = 0; wanted < ARRAY_SIZE(rayTracingExtensions); wanted++ )
+		{
+			if( strcmp( rayTracingExtensions[wanted], globalDeviceExtensions[i].extensionName ) == 0 )
+				rayTracingExtensionsAvailable[wanted] = true;
+		}
+	}
+
+	RayTracingAvailable = true;
+	for( unsigned int i = 0; i < ARRAY_SIZE(rayTracingExtensions); i++ )
+	{
+		if( rayTracingExtensionsAvailable[i] )
+		{
+			myDeviceExtensions.push_back( rayTracingExtensions[i] );
+		}
+		else
+		{
+			RayTracingAvailable = false;
+			fprintf(FpDebug, "Ray tracing extension missing: %s\n", rayTracingExtensions[i]);
+		}
+	}
+	delete[ ] globalDeviceExtensions;
+
 	delete[ ] deviceLayers;
 
+	VkPhysicalDeviceBufferDeviceAddressFeatures bufferDeviceAddressFeatures;
+		bufferDeviceAddressFeatures.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES;
+		bufferDeviceAddressFeatures.pNext = nullptr;
+		bufferDeviceAddressFeatures.bufferDeviceAddress = RayTracingAvailable ? VK_TRUE : VK_FALSE;
+		bufferDeviceAddressFeatures.bufferDeviceAddressCaptureReplay = VK_FALSE;
+		bufferDeviceAddressFeatures.bufferDeviceAddressMultiDevice = VK_FALSE;
+
+	VkPhysicalDeviceAccelerationStructureFeaturesKHR accelerationStructureFeatures;
+		accelerationStructureFeatures.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR;
+		accelerationStructureFeatures.pNext = &bufferDeviceAddressFeatures;
+		accelerationStructureFeatures.accelerationStructure = RayTracingAvailable ? VK_TRUE : VK_FALSE;
+		accelerationStructureFeatures.accelerationStructureCaptureReplay = VK_FALSE;
+		accelerationStructureFeatures.accelerationStructureIndirectBuild = VK_FALSE;
+		accelerationStructureFeatures.accelerationStructureHostCommands = VK_FALSE;
+		accelerationStructureFeatures.descriptorBindingAccelerationStructureUpdateAfterBind = VK_FALSE;
+
+	VkPhysicalDeviceRayTracingPipelineFeaturesKHR rayTracingPipelineFeatures;
+		rayTracingPipelineFeatures.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR;
+		rayTracingPipelineFeatures.pNext = &accelerationStructureFeatures;
+		rayTracingPipelineFeatures.rayTracingPipeline = RayTracingAvailable ? VK_TRUE : VK_FALSE;
+		rayTracingPipelineFeatures.rayTracingPipelineShaderGroupHandleCaptureReplay = VK_FALSE;
+		rayTracingPipelineFeatures.rayTracingPipelineShaderGroupHandleCaptureReplayMixed = VK_FALSE;
+		rayTracingPipelineFeatures.rayTracingPipelineTraceRaysIndirect = VK_FALSE;
+		rayTracingPipelineFeatures.rayTraversalPrimitiveCulling = VK_FALSE;
+
+	VkPhysicalDeviceProperties2 properties2;
+		properties2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2;
+		properties2.pNext = &RayTracingPipelineProperties;
+	RayTracingPipelineProperties.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR;
+	RayTracingPipelineProperties.pNext = nullptr;
+	if( RayTracingAvailable )
+	{
+		vkGetPhysicalDeviceProperties2( PhysicalDevice, OUT &properties2 );
+		fprintf(FpDebug, "Ray tracing shaderGroupHandleSize = %d\n", RayTracingPipelineProperties.shaderGroupHandleSize);
+		fprintf(FpDebug, "Ray tracing shaderGroupBaseAlignment = %d\n", RayTracingPipelineProperties.shaderGroupBaseAlignment);
+	}
 
 	VkDeviceCreateInfo   vdci;
 		vdci.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-		vdci.pNext = nullptr;
+		vdci.pNext = RayTracingAvailable ? &rayTracingPipelineFeatures : nullptr;
 		vdci.flags = 0;
 		vdci.queueCreateInfoCount = NUM_QUEUES_WANTED;		// # of device queues, each of which can create multiple queues
 		vdci.pQueueCreateInfos = IN &vdqci[0];			// array of VkDeviceQueueCreateInfo's
@@ -1205,8 +1379,8 @@ Init04LogicalDeviceAndQueue( )
 		//vdci.enabledLayerCount = 0;
 		vdci.ppEnabledLayerNames = myDeviceLayers;
 
-		vdci.enabledExtensionCount = sizeof(myDeviceExtensions) / sizeof(char *);
-		vdci.ppEnabledExtensionNames = myDeviceExtensions;
+		vdci.enabledExtensionCount = (uint32_t)myDeviceExtensions.size( );
+		vdci.ppEnabledExtensionNames = myDeviceExtensions.data( );
 
 		vdci.pEnabledFeatures = IN &PhysicalDeviceFeatures;	// already created
 
@@ -1281,6 +1455,16 @@ VK_SHARING_MODE_CONCURRENT
 		vmai.allocationSize = vmr.size;
 		vmai.memoryTypeIndex = FindMemoryThatIsHostVisible( vmr.memoryTypeBits );
 
+	VkMemoryAllocateFlagsInfo		vmafi;
+		vmafi.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO;
+		vmafi.pNext = nullptr;
+		vmafi.flags = VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT;
+		vmafi.deviceMask = 0;
+	if( ( usage & VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT ) != 0 )
+	{
+		vmai.pNext = &vmafi;
+	}
+
 	VkDeviceMemory				vdm;
 	result = vkAllocateMemory( LogicalDevice, IN &vmai, PALLOCATOR, OUT &vdm );
 	REPORT( "vkAllocateMemory" );
@@ -1312,7 +1496,13 @@ Init05MyIndexDataBuffer(IN VkDeviceSize size, OUT MyBuffer * pMyBuffer)
 VkResult
 Init05MyVertexDataBuffer( IN VkDeviceSize size, OUT MyBuffer * pMyBuffer )
 {
-	VkResult result = Init05DataBuffer( size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, pMyBuffer );		// fills pMyBuffer
+	VkBufferUsageFlags usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+	if( RayTracingAvailable )
+	{
+		usage |= VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_BIT_KHR;
+		usage |= VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT;
+	}
+	VkResult result = Init05DataBuffer( size, usage, pMyBuffer );		// fills pMyBuffer
 	REPORT( "InitDataBuffer" );
 	return result;
 }
@@ -1844,7 +2034,7 @@ Init07TextureBufferAndFillFromBmpFile( IN std::string filename, OUT MyTexture * 
 	fp = fopen( filename.c_str( ), "rb" );
 	if( fp == NULL )
 	{
-		fprintf( stderr, "Cannot open BMP file '%s'\n", filename.c_str( ) );
+		fprintf( stderr, "Cannot open BMP file '%s'\n", filename.c_str( ) );``
 		return VK_FAILURE;
 	}
 #endif
@@ -3745,6 +3935,61 @@ DestroyAllVulkan( )
 	result = vkDeviceWaitIdle( LogicalDevice );
 	REPORT( "vkWaitIdle" );
 
+	if( RayShaderBindingTable.buffer != VK_NULL_HANDLE )
+	{
+		vkDestroyBuffer( LogicalDevice, RayShaderBindingTable.buffer, PALLOCATOR );
+		vkFreeMemory( LogicalDevice, RayShaderBindingTable.vdm, PALLOCATOR );
+	}
+	if( MyRaySceneUniformBuffer.buffer != VK_NULL_HANDLE )
+	{
+		vkDestroyBuffer( LogicalDevice, MyRaySceneUniformBuffer.buffer, PALLOCATOR );
+		vkFreeMemory( LogicalDevice, MyRaySceneUniformBuffer.vdm, PALLOCATOR );
+	}
+	if( RayPipeline != VK_NULL_HANDLE )
+		vkDestroyPipeline( LogicalDevice, RayPipeline, PALLOCATOR );
+	if( RayPipelineLayout != VK_NULL_HANDLE )
+		vkDestroyPipelineLayout( LogicalDevice, RayPipelineLayout, PALLOCATOR );
+	if( ShaderModuleRayGen != VK_NULL_HANDLE )
+		vkDestroyShaderModule( LogicalDevice, ShaderModuleRayGen, PALLOCATOR );
+	if( ShaderModuleRayMiss != VK_NULL_HANDLE )
+		vkDestroyShaderModule( LogicalDevice, ShaderModuleRayMiss, PALLOCATOR );
+	if( ShaderModuleRayClosestHit != VK_NULL_HANDLE )
+		vkDestroyShaderModule( LogicalDevice, ShaderModuleRayClosestHit, PALLOCATOR );
+	if( RayDescriptorPool != VK_NULL_HANDLE )
+		vkDestroyDescriptorPool( LogicalDevice, RayDescriptorPool, PALLOCATOR );
+	if( RayDescriptorSetLayout != VK_NULL_HANDLE )
+		vkDestroyDescriptorSetLayout( LogicalDevice, RayDescriptorSetLayout, PALLOCATOR );
+	if( pfnVkDestroyAccelerationStructureKHR != nullptr && TopLevelAS.handle != VK_NULL_HANDLE )
+		pfnVkDestroyAccelerationStructureKHR( LogicalDevice, TopLevelAS.handle, PALLOCATOR );
+	if( TopLevelAS.buffer.buffer != VK_NULL_HANDLE )
+	{
+		vkDestroyBuffer( LogicalDevice, TopLevelAS.buffer.buffer, PALLOCATOR );
+		vkFreeMemory( LogicalDevice, TopLevelAS.buffer.vdm, PALLOCATOR );
+	}
+	if( pfnVkDestroyAccelerationStructureKHR != nullptr && BottomLevelAS.handle != VK_NULL_HANDLE )
+		pfnVkDestroyAccelerationStructureKHR( LogicalDevice, BottomLevelAS.handle, PALLOCATOR );
+	if( BottomLevelAS.buffer.buffer != VK_NULL_HANDLE )
+	{
+		vkDestroyBuffer( LogicalDevice, BottomLevelAS.buffer.buffer, PALLOCATOR );
+		vkFreeMemory( LogicalDevice, BottomLevelAS.buffer.vdm, PALLOCATOR );
+	}
+	if( RayInstanceBuffer.buffer != VK_NULL_HANDLE )
+	{
+		vkDestroyBuffer( LogicalDevice, RayInstanceBuffer.buffer, PALLOCATOR );
+		vkFreeMemory( LogicalDevice, RayInstanceBuffer.vdm, PALLOCATOR );
+	}
+	if( RayTlasScratchBuffer.buffer != VK_NULL_HANDLE )
+	{
+		vkDestroyBuffer( LogicalDevice, RayTlasScratchBuffer.buffer, PALLOCATOR );
+		vkFreeMemory( LogicalDevice, RayTlasScratchBuffer.vdm, PALLOCATOR );
+	}
+	if( RayOutputImage.imageView != VK_NULL_HANDLE )
+		vkDestroyImageView( LogicalDevice, RayOutputImage.imageView, PALLOCATOR );
+	if( RayOutputImage.image != VK_NULL_HANDLE )
+		vkDestroyImage( LogicalDevice, RayOutputImage.image, PALLOCATOR );
+	if( RayOutputImage.vdm != VK_NULL_HANDLE )
+		vkFreeMemory( LogicalDevice, RayOutputImage.vdm, PALLOCATOR );
+
 
 	// destroy things in the opposite order in which they were created:
 
@@ -3970,6 +4215,940 @@ FindQueueFamilyThatDoesTransfer( )
 }
 
 
+uint32_t
+AlignedSize( uint32_t value, uint32_t alignment )
+{
+	return ( value + alignment - 1 ) & ~( alignment - 1 );
+}
+
+
+float
+AtomRadius( int atomicNumber )
+{
+	switch( atomicNumber )
+	{
+		case 1:	return 0.25f;	// hydrogen
+		case 6:	return 0.70f;	// carbon
+		case 7:	return 0.65f;	// nitrogen
+		case 8:	return 0.60f;	// oxygen
+		default: return 0.75f;
+	}
+}
+
+
+glm::vec3
+RotateY( glm::vec3 p, float angle )
+{
+	float c = cosf( angle );
+	float s = sinf( angle );
+	return glm::vec3( c*p.x + s*p.z, p.y, -s*p.x + c*p.z );
+}
+
+
+VkTransformMatrixKHR
+SphereTransform( glm::vec3 center, float radius, float angle )
+{
+	float c = cosf( angle );
+	float s = sinf( angle );
+	VkTransformMatrixKHR transform =
+	{{
+		{ radius*c, 0.f, radius*s, center.x },
+		{ 0.f,      radius, 0.f,   center.y },
+		{ -radius*s,0.f, radius*c, center.z },
+	}};
+	return transform;
+}
+
+
+VkDeviceAddress
+GetBufferDeviceAddress( VkBuffer buffer )
+{
+	VkBufferDeviceAddressInfo vbdi;
+		vbdi.sType = VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO;
+		vbdi.pNext = nullptr;
+		vbdi.buffer = buffer;
+	return pfnVkGetBufferDeviceAddressKHR( LogicalDevice, &vbdi );
+}
+
+
+VkResult
+CreateDeviceAddressBuffer( VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryFlags, OUT MyBuffer * pMyBuffer )
+{
+	VkResult result = VK_SUCCESS;
+
+	usage |= VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT;
+
+	VkBufferCreateInfo vbci;
+		vbci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		vbci.pNext = nullptr;
+		vbci.flags = 0;
+		vbci.size = size;
+		vbci.usage = usage;
+		vbci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		vbci.queueFamilyIndexCount = 0;
+		vbci.pQueueFamilyIndices = nullptr;
+
+	pMyBuffer->size = size;
+	result = vkCreateBuffer( LogicalDevice, IN &vbci, PALLOCATOR, OUT &pMyBuffer->buffer );
+	REPORT( "CreateDeviceAddressBuffer -- vkCreateBuffer" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkMemoryRequirements vmr;
+	vkGetBufferMemoryRequirements( LogicalDevice, pMyBuffer->buffer, OUT &vmr );
+
+	VkMemoryAllocateFlagsInfo vmafi;
+		vmafi.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO;
+		vmafi.pNext = nullptr;
+		vmafi.flags = VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT;
+		vmafi.deviceMask = 0;
+
+	VkMemoryAllocateInfo vmai;
+		vmai.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		vmai.pNext = &vmafi;
+		vmai.allocationSize = vmr.size;
+		vmai.memoryTypeIndex = FindMemoryByFlagAndType( (VkMemoryPropertyFlagBits)memoryFlags, vmr.memoryTypeBits );
+
+	result = vkAllocateMemory( LogicalDevice, IN &vmai, PALLOCATOR, OUT &pMyBuffer->vdm );
+	REPORT( "CreateDeviceAddressBuffer -- vkAllocateMemory" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	result = vkBindBufferMemory( LogicalDevice, pMyBuffer->buffer, pMyBuffer->vdm, 0 );
+	REPORT( "CreateDeviceAddressBuffer -- vkBindBufferMemory" );
+	return result;
+}
+
+
+VkResult
+CreateAccelerationStructureObject( VkAccelerationStructureTypeKHR type, VkDeviceSize size, OUT MyAccelerationStructure * pAs )
+{
+	VkResult result = CreateDeviceAddressBuffer( size,
+		VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_STORAGE_BIT_KHR,
+		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+		&pAs->buffer );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkAccelerationStructureCreateInfoKHR vasci;
+		vasci.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_CREATE_INFO_KHR;
+		vasci.pNext = nullptr;
+		vasci.createFlags = 0;
+		vasci.buffer = pAs->buffer.buffer;
+		vasci.offset = 0;
+		vasci.size = size;
+		vasci.type = type;
+		vasci.deviceAddress = 0;
+
+	result = pfnVkCreateAccelerationStructureKHR( LogicalDevice, IN &vasci, PALLOCATOR, OUT &pAs->handle );
+	REPORT( "vkCreateAccelerationStructureKHR" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkAccelerationStructureDeviceAddressInfoKHR vasdai;
+		vasdai.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR;
+		vasdai.pNext = nullptr;
+		vasdai.accelerationStructure = pAs->handle;
+	pAs->deviceAddress = pfnVkGetAccelerationStructureDeviceAddressKHR( LogicalDevice, IN &vasdai );
+	return VK_SUCCESS;
+}
+
+
+VkResult
+Init15LoadRayTracingFunctions( )
+{
+	if( ! RayTracingAvailable )
+		return VK_FAILURE;
+
+	pfnVkGetBufferDeviceAddressKHR = (PFN_vkGetBufferDeviceAddressKHR) vkGetDeviceProcAddr( LogicalDevice, "vkGetBufferDeviceAddressKHR" );
+	pfnVkCreateAccelerationStructureKHR = (PFN_vkCreateAccelerationStructureKHR) vkGetDeviceProcAddr( LogicalDevice, "vkCreateAccelerationStructureKHR" );
+	pfnVkDestroyAccelerationStructureKHR = (PFN_vkDestroyAccelerationStructureKHR) vkGetDeviceProcAddr( LogicalDevice, "vkDestroyAccelerationStructureKHR" );
+	pfnVkGetAccelerationStructureBuildSizesKHR = (PFN_vkGetAccelerationStructureBuildSizesKHR) vkGetDeviceProcAddr( LogicalDevice, "vkGetAccelerationStructureBuildSizesKHR" );
+	pfnVkGetAccelerationStructureDeviceAddressKHR = (PFN_vkGetAccelerationStructureDeviceAddressKHR) vkGetDeviceProcAddr( LogicalDevice, "vkGetAccelerationStructureDeviceAddressKHR" );
+	pfnVkCmdBuildAccelerationStructuresKHR = (PFN_vkCmdBuildAccelerationStructuresKHR) vkGetDeviceProcAddr( LogicalDevice, "vkCmdBuildAccelerationStructuresKHR" );
+	pfnVkCreateRayTracingPipelinesKHR = (PFN_vkCreateRayTracingPipelinesKHR) vkGetDeviceProcAddr( LogicalDevice, "vkCreateRayTracingPipelinesKHR" );
+	pfnVkGetRayTracingShaderGroupHandlesKHR = (PFN_vkGetRayTracingShaderGroupHandlesKHR) vkGetDeviceProcAddr( LogicalDevice, "vkGetRayTracingShaderGroupHandlesKHR" );
+	pfnVkCmdTraceRaysKHR = (PFN_vkCmdTraceRaysKHR) vkGetDeviceProcAddr( LogicalDevice, "vkCmdTraceRaysKHR" );
+
+	if( pfnVkGetBufferDeviceAddressKHR == nullptr ||
+		pfnVkCreateAccelerationStructureKHR == nullptr ||
+		pfnVkDestroyAccelerationStructureKHR == nullptr ||
+		pfnVkGetAccelerationStructureBuildSizesKHR == nullptr ||
+		pfnVkGetAccelerationStructureDeviceAddressKHR == nullptr ||
+		pfnVkCmdBuildAccelerationStructuresKHR == nullptr ||
+		pfnVkCreateRayTracingPipelinesKHR == nullptr ||
+		pfnVkGetRayTracingShaderGroupHandlesKHR == nullptr ||
+		pfnVkCmdTraceRaysKHR == nullptr )
+	{
+		fprintf( FpDebug, "Could not load all KHR ray tracing function pointers.\n" );
+		return VK_FAILURE;
+	}
+
+	return VK_SUCCESS;
+}
+
+
+VkResult
+Init15RayOutputImage( )
+{
+	VkResult result = VK_SUCCESS;
+	RayOutputImage.format = VK_FORMAT_R8G8B8A8_UNORM;
+
+	VkImageCreateInfo vici;
+		vici.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+		vici.pNext = nullptr;
+		vici.flags = 0;
+		vici.imageType = VK_IMAGE_TYPE_2D;
+		vici.format = RayOutputImage.format;
+		vici.extent.width = Width;
+		vici.extent.height = Height;
+		vici.extent.depth = 1;
+		vici.mipLevels = 1;
+		vici.arrayLayers = 1;
+		vici.samples = VK_SAMPLE_COUNT_1_BIT;
+		vici.tiling = VK_IMAGE_TILING_OPTIMAL;
+		vici.usage = VK_IMAGE_USAGE_STORAGE_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+		vici.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		vici.queueFamilyIndexCount = 0;
+		vici.pQueueFamilyIndices = nullptr;
+		vici.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+
+	result = vkCreateImage( LogicalDevice, IN &vici, PALLOCATOR, OUT &RayOutputImage.image );
+	REPORT( "RayOutput -- vkCreateImage" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkMemoryRequirements vmr;
+	vkGetImageMemoryRequirements( LogicalDevice, RayOutputImage.image, OUT &vmr );
+
+	VkMemoryAllocateInfo vmai;
+		vmai.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		vmai.pNext = nullptr;
+		vmai.allocationSize = vmr.size;
+		vmai.memoryTypeIndex = FindMemoryThatIsDeviceLocal( vmr.memoryTypeBits );
+
+	result = vkAllocateMemory( LogicalDevice, IN &vmai, PALLOCATOR, OUT &RayOutputImage.vdm );
+	REPORT( "RayOutput -- vkAllocateMemory" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	result = vkBindImageMemory( LogicalDevice, RayOutputImage.image, RayOutputImage.vdm, 0 );
+	REPORT( "RayOutput -- vkBindImageMemory" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkImageViewCreateInfo vivci;
+		vivci.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		vivci.pNext = nullptr;
+		vivci.flags = 0;
+		vivci.image = RayOutputImage.image;
+		vivci.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		vivci.format = RayOutputImage.format;
+		vivci.components.r = VK_COMPONENT_SWIZZLE_R;
+		vivci.components.g = VK_COMPONENT_SWIZZLE_G;
+		vivci.components.b = VK_COMPONENT_SWIZZLE_B;
+		vivci.components.a = VK_COMPONENT_SWIZZLE_A;
+		vivci.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		vivci.subresourceRange.baseMipLevel = 0;
+		vivci.subresourceRange.levelCount = 1;
+		vivci.subresourceRange.baseArrayLayer = 0;
+		vivci.subresourceRange.layerCount = 1;
+
+	result = vkCreateImageView( LogicalDevice, IN &vivci, PALLOCATOR, OUT &RayOutputImage.imageView );
+	REPORT( "RayOutput -- vkCreateImageView" );
+	return result;
+}
+
+
+VkResult
+Init15AccelerationStructures( )
+{
+	VkResult result = VK_SUCCESS;
+
+	uint32_t vertexCount = (uint32_t)( MyVertexDataBuffer.size / sizeof(struct vertex) );
+	uint32_t triangleCount = vertexCount / 3;
+
+	VkAccelerationStructureGeometryTrianglesDataKHR triangles;
+		triangles.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR;
+		triangles.pNext = nullptr;
+		triangles.vertexFormat = VK_FORMAT_R32G32B32_SFLOAT;
+		triangles.vertexData.deviceAddress = GetBufferDeviceAddress( MyVertexDataBuffer.buffer );
+		triangles.vertexStride = sizeof( struct vertex );
+		triangles.maxVertex = vertexCount - 1;
+		triangles.indexType = VK_INDEX_TYPE_NONE_KHR;
+		triangles.indexData.deviceAddress = 0;
+		triangles.transformData.deviceAddress = 0;
+
+	VkAccelerationStructureGeometryKHR blasGeometry;
+		blasGeometry.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_KHR;
+		blasGeometry.pNext = nullptr;
+		blasGeometry.geometryType = VK_GEOMETRY_TYPE_TRIANGLES_KHR;
+		blasGeometry.geometry.triangles = triangles;
+		blasGeometry.flags = VK_GEOMETRY_OPAQUE_BIT_KHR;
+
+	VkAccelerationStructureBuildGeometryInfoKHR blasBuildInfo;
+		blasBuildInfo.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR;
+		blasBuildInfo.pNext = nullptr;
+		blasBuildInfo.type = VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_KHR;
+		blasBuildInfo.flags = VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR;
+		blasBuildInfo.mode = VK_BUILD_ACCELERATION_STRUCTURE_MODE_BUILD_KHR;
+		blasBuildInfo.srcAccelerationStructure = VK_NULL_HANDLE;
+		blasBuildInfo.dstAccelerationStructure = VK_NULL_HANDLE;
+		blasBuildInfo.geometryCount = 1;
+		blasBuildInfo.pGeometries = &blasGeometry;
+		blasBuildInfo.ppGeometries = nullptr;
+		blasBuildInfo.scratchData.deviceAddress = 0;
+
+	VkAccelerationStructureBuildSizesInfoKHR blasSizes;
+		blasSizes.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR;
+		blasSizes.pNext = nullptr;
+	pfnVkGetAccelerationStructureBuildSizesKHR( LogicalDevice, VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR, IN &blasBuildInfo, IN &triangleCount, OUT &blasSizes );
+
+	result = CreateAccelerationStructureObject( VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_KHR, blasSizes.accelerationStructureSize, OUT &BottomLevelAS );
+	if( result != VK_SUCCESS )
+		return result;
+
+	MyBuffer blasScratch;
+	result = CreateDeviceAddressBuffer( blasSizes.buildScratchSize, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, OUT &blasScratch );
+	if( result != VK_SUCCESS )
+		return result;
+
+	blasBuildInfo.dstAccelerationStructure = BottomLevelAS.handle;
+	blasBuildInfo.scratchData.deviceAddress = GetBufferDeviceAddress( blasScratch.buffer );
+
+	VkAccelerationStructureBuildRangeInfoKHR blasRange;
+		blasRange.primitiveCount = triangleCount;
+		blasRange.primitiveOffset = 0;
+		blasRange.firstVertex = 0;
+		blasRange.transformOffset = 0;
+	const VkAccelerationStructureBuildRangeInfoKHR * blasRanges[1] = { &blasRange };
+
+	result = CreateDeviceAddressBuffer( sizeof(VkAccelerationStructureInstanceKHR) * RAY_INSTANCE_COUNT,
+		VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_BIT_KHR,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+		OUT &RayInstanceBuffer );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkAccelerationStructureGeometryInstancesDataKHR instancesData;
+		instancesData.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR;
+		instancesData.pNext = nullptr;
+		instancesData.arrayOfPointers = VK_FALSE;
+		instancesData.data.deviceAddress = GetBufferDeviceAddress( RayInstanceBuffer.buffer );
+
+	VkAccelerationStructureGeometryKHR tlasGeometry;
+		tlasGeometry.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_KHR;
+		tlasGeometry.pNext = nullptr;
+		tlasGeometry.geometryType = VK_GEOMETRY_TYPE_INSTANCES_KHR;
+		tlasGeometry.geometry.instances = instancesData;
+		tlasGeometry.flags = VK_GEOMETRY_OPAQUE_BIT_KHR;
+
+	uint32_t instanceCount = RAY_INSTANCE_COUNT;
+	VkAccelerationStructureBuildGeometryInfoKHR tlasBuildInfo;
+		tlasBuildInfo.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR;
+		tlasBuildInfo.pNext = nullptr;
+		tlasBuildInfo.type = VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR;
+		tlasBuildInfo.flags = VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR;
+		tlasBuildInfo.mode = VK_BUILD_ACCELERATION_STRUCTURE_MODE_BUILD_KHR;
+		tlasBuildInfo.srcAccelerationStructure = VK_NULL_HANDLE;
+		tlasBuildInfo.dstAccelerationStructure = VK_NULL_HANDLE;
+		tlasBuildInfo.geometryCount = 1;
+		tlasBuildInfo.pGeometries = &tlasGeometry;
+		tlasBuildInfo.ppGeometries = nullptr;
+		tlasBuildInfo.scratchData.deviceAddress = 0;
+
+	VkAccelerationStructureBuildSizesInfoKHR tlasSizes;
+		tlasSizes.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR;
+		tlasSizes.pNext = nullptr;
+	pfnVkGetAccelerationStructureBuildSizesKHR( LogicalDevice, VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR, IN &tlasBuildInfo, IN &instanceCount, OUT &tlasSizes );
+
+	result = CreateAccelerationStructureObject( VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR, tlasSizes.accelerationStructureSize, OUT &TopLevelAS );
+	if( result != VK_SUCCESS )
+		return result;
+
+	result = CreateDeviceAddressBuffer( tlasSizes.buildScratchSize, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, OUT &RayTlasScratchBuffer );
+	if( result != VK_SUCCESS )
+		return result;
+
+	tlasBuildInfo.dstAccelerationStructure = TopLevelAS.handle;
+	tlasBuildInfo.scratchData.deviceAddress = GetBufferDeviceAddress( RayTlasScratchBuffer.buffer );
+
+	VkAccelerationStructureBuildRangeInfoKHR tlasRange;
+		tlasRange.primitiveCount = instanceCount;
+		tlasRange.primitiveOffset = 0;
+		tlasRange.firstVertex = 0;
+		tlasRange.transformOffset = 0;
+	const VkAccelerationStructureBuildRangeInfoKHR * tlasRanges[1] = { &tlasRange };
+
+	VkCommandBufferBeginInfo vcbbi;
+		vcbbi.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		vcbbi.pNext = nullptr;
+		vcbbi.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		vcbbi.pInheritanceInfo = nullptr;
+	vkResetCommandBuffer( TextureCommandBuffer, 0 );
+	vkBeginCommandBuffer( TextureCommandBuffer, IN &vcbbi );
+	pfnVkCmdBuildAccelerationStructuresKHR( TextureCommandBuffer, 1, IN &blasBuildInfo, IN blasRanges );
+
+	VkMemoryBarrier vmb;
+		vmb.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+		vmb.pNext = nullptr;
+		vmb.srcAccessMask = VK_ACCESS_ACCELERATION_STRUCTURE_WRITE_BIT_KHR;
+		vmb.dstAccessMask = VK_ACCESS_ACCELERATION_STRUCTURE_READ_BIT_KHR;
+	vkCmdPipelineBarrier( TextureCommandBuffer,
+		VK_PIPELINE_STAGE_ACCELERATION_STRUCTURE_BUILD_BIT_KHR,
+		VK_PIPELINE_STAGE_ACCELERATION_STRUCTURE_BUILD_BIT_KHR,
+		0, 1, IN &vmb, 0, nullptr, 0, nullptr );
+
+	vkEndCommandBuffer( TextureCommandBuffer );
+
+	VkSubmitInfo vsi;
+		vsi.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		vsi.pNext = nullptr;
+		vsi.waitSemaphoreCount = 0;
+		vsi.pWaitSemaphores = nullptr;
+		vsi.pWaitDstStageMask = nullptr;
+		vsi.commandBufferCount = 1;
+		vsi.pCommandBuffers = &TextureCommandBuffer;
+		vsi.signalSemaphoreCount = 0;
+		vsi.pSignalSemaphores = nullptr;
+	result = vkQueueSubmit( Queue, 1, IN &vsi, VK_NULL_HANDLE );
+	REPORT( "AS build -- vkQueueSubmit" );
+	vkQueueWaitIdle( Queue );
+
+	vkDestroyBuffer( LogicalDevice, blasScratch.buffer, PALLOCATOR );
+	vkFreeMemory( LogicalDevice, blasScratch.vdm, PALLOCATOR );
+	result = UpdateRayTracingInstances( 0.f );
+	return result;
+}
+
+
+VkResult
+UpdateRayTracingInstances( float rotationAngle )
+{
+	if( ! RayTracingEnabled && TopLevelAS.handle == VK_NULL_HANDLE )
+		return VK_SUCCESS;
+
+	VkAccelerationStructureInstanceKHR instances[RAY_INSTANCE_COUNT];
+	for( int i = 0; i < NUMATOMS; i++ )
+	{
+		float radius = AtomRadius( Atoms[i].atomicNumber );
+		glm::vec3 center = RotateY( Atoms[i].position, rotationAngle );
+		center.y += RAY_MOLECULE_Y_OFFSET;
+		instances[i].transform = SphereTransform( center, radius, rotationAngle );
+		instances[i].instanceCustomIndex = i;
+		instances[i].mask = 0xff;
+		instances[i].instanceShaderBindingTableRecordOffset = 0;
+		instances[i].flags = VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR;
+		instances[i].accelerationStructureReference = BottomLevelAS.deviceAddress;
+	}
+
+	instances[RAY_REFLECTION_SPHERE_INDEX].transform = SphereTransform( glm::vec3( 2.8f, 0.1f, 2.0f ), 0.9f, 0.f );
+	instances[RAY_REFLECTION_SPHERE_INDEX].instanceCustomIndex = RAY_REFLECTION_SPHERE_INDEX;
+	instances[RAY_REFLECTION_SPHERE_INDEX].mask = 0xff;
+	instances[RAY_REFLECTION_SPHERE_INDEX].instanceShaderBindingTableRecordOffset = 0;
+	instances[RAY_REFLECTION_SPHERE_INDEX].flags = VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR;
+	instances[RAY_REFLECTION_SPHERE_INDEX].accelerationStructureReference = BottomLevelAS.deviceAddress;
+
+	void * pInstances;
+	vkMapMemory( LogicalDevice, RayInstanceBuffer.vdm, 0, VK_WHOLE_SIZE, 0, OUT &pInstances );
+	memcpy( pInstances, instances, sizeof(instances) );
+	vkUnmapMemory( LogicalDevice, RayInstanceBuffer.vdm );
+
+	VkAccelerationStructureGeometryInstancesDataKHR instancesData;
+		instancesData.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR;
+		instancesData.pNext = nullptr;
+		instancesData.arrayOfPointers = VK_FALSE;
+		instancesData.data.deviceAddress = GetBufferDeviceAddress( RayInstanceBuffer.buffer );
+
+	VkAccelerationStructureGeometryKHR tlasGeometry;
+		tlasGeometry.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_KHR;
+		tlasGeometry.pNext = nullptr;
+		tlasGeometry.geometryType = VK_GEOMETRY_TYPE_INSTANCES_KHR;
+		tlasGeometry.geometry.instances = instancesData;
+		tlasGeometry.flags = VK_GEOMETRY_OPAQUE_BIT_KHR;
+
+	VkAccelerationStructureBuildGeometryInfoKHR tlasBuildInfo;
+		tlasBuildInfo.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR;
+		tlasBuildInfo.pNext = nullptr;
+		tlasBuildInfo.type = VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR;
+		tlasBuildInfo.flags = VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR;
+		tlasBuildInfo.mode = VK_BUILD_ACCELERATION_STRUCTURE_MODE_BUILD_KHR;
+		tlasBuildInfo.srcAccelerationStructure = VK_NULL_HANDLE;
+		tlasBuildInfo.dstAccelerationStructure = TopLevelAS.handle;
+		tlasBuildInfo.geometryCount = 1;
+		tlasBuildInfo.pGeometries = &tlasGeometry;
+		tlasBuildInfo.ppGeometries = nullptr;
+		tlasBuildInfo.scratchData.deviceAddress = GetBufferDeviceAddress( RayTlasScratchBuffer.buffer );
+
+	VkAccelerationStructureBuildRangeInfoKHR tlasRange;
+		tlasRange.primitiveCount = RAY_INSTANCE_COUNT;
+		tlasRange.primitiveOffset = 0;
+		tlasRange.firstVertex = 0;
+		tlasRange.transformOffset = 0;
+	const VkAccelerationStructureBuildRangeInfoKHR * tlasRanges[1] = { &tlasRange };
+
+	VkCommandBufferBeginInfo vcbbi;
+		vcbbi.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		vcbbi.pNext = nullptr;
+		vcbbi.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		vcbbi.pInheritanceInfo = nullptr;
+	vkResetCommandBuffer( TextureCommandBuffer, 0 );
+	vkBeginCommandBuffer( TextureCommandBuffer, IN &vcbbi );
+	pfnVkCmdBuildAccelerationStructuresKHR( TextureCommandBuffer, 1, IN &tlasBuildInfo, IN tlasRanges );
+	vkEndCommandBuffer( TextureCommandBuffer );
+
+	VkSubmitInfo vsi;
+		vsi.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		vsi.pNext = nullptr;
+		vsi.waitSemaphoreCount = 0;
+		vsi.pWaitSemaphores = nullptr;
+		vsi.pWaitDstStageMask = nullptr;
+		vsi.commandBufferCount = 1;
+		vsi.pCommandBuffers = &TextureCommandBuffer;
+		vsi.signalSemaphoreCount = 0;
+		vsi.pSignalSemaphores = nullptr;
+	VkResult result = vkQueueSubmit( Queue, 1, IN &vsi, VK_NULL_HANDLE );
+	REPORT( "UpdateRayTracingInstances -- vkQueueSubmit" );
+	vkQueueWaitIdle( Queue );
+
+	RayMoleculeRotation = rotationAngle;
+	RayScene.uMolecule = glm::vec4( RAY_MOLECULE_Y_OFFSET, RayMoleculeRotation, 0.f, 0.f );
+	return result;
+}
+
+
+VkResult
+Init15RayTracingDescriptors( )
+{
+	VkResult result = VK_SUCCESS;
+
+	VkDescriptorPoolSize vdps[3];
+		vdps[0].type = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
+		vdps[0].descriptorCount = 1;
+		vdps[1].type = VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR;
+		vdps[1].descriptorCount = 1;
+		vdps[2].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		vdps[2].descriptorCount = 2;
+
+	VkDescriptorPoolCreateInfo vdpci;
+		vdpci.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+		vdpci.pNext = nullptr;
+		vdpci.flags = 0;
+		vdpci.maxSets = 1;
+		vdpci.poolSizeCount = 3;
+		vdpci.pPoolSizes = vdps;
+	result = vkCreateDescriptorPool( LogicalDevice, IN &vdpci, PALLOCATOR, OUT &RayDescriptorPool );
+	REPORT( "Ray -- vkCreateDescriptorPool" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkDescriptorSetLayoutBinding bindings[4];
+		bindings[0].binding = 0;
+		bindings[0].descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
+		bindings[0].descriptorCount = 1;
+		bindings[0].stageFlags = VK_SHADER_STAGE_RAYGEN_BIT_KHR;
+		bindings[0].pImmutableSamplers = nullptr;
+		bindings[1].binding = 1;
+		bindings[1].descriptorType = VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR;
+		bindings[1].descriptorCount = 1;
+		bindings[1].stageFlags = VK_SHADER_STAGE_RAYGEN_BIT_KHR | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR;
+		bindings[1].pImmutableSamplers = nullptr;
+		bindings[2].binding = 2;
+		bindings[2].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		bindings[2].descriptorCount = 1;
+		bindings[2].stageFlags = VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR;
+		bindings[2].pImmutableSamplers = nullptr;
+		bindings[3].binding = 3;
+		bindings[3].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		bindings[3].descriptorCount = 1;
+		bindings[3].stageFlags = VK_SHADER_STAGE_RAYGEN_BIT_KHR | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR;
+		bindings[3].pImmutableSamplers = nullptr;
+
+	VkDescriptorSetLayoutCreateInfo vdslci;
+		vdslci.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		vdslci.pNext = nullptr;
+		vdslci.flags = 0;
+		vdslci.bindingCount = 4;
+		vdslci.pBindings = bindings;
+	result = vkCreateDescriptorSetLayout( LogicalDevice, IN &vdslci, PALLOCATOR, OUT &RayDescriptorSetLayout );
+	REPORT( "Ray -- vkCreateDescriptorSetLayout" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkDescriptorSetAllocateInfo vdsai;
+		vdsai.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+		vdsai.pNext = nullptr;
+		vdsai.descriptorPool = RayDescriptorPool;
+		vdsai.descriptorSetCount = 1;
+		vdsai.pSetLayouts = &RayDescriptorSetLayout;
+	result = vkAllocateDescriptorSets( LogicalDevice, IN &vdsai, OUT &RayDescriptorSet );
+	REPORT( "Ray -- vkAllocateDescriptorSets" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkDescriptorImageInfo vdii;
+		vdii.sampler = VK_NULL_HANDLE;
+		vdii.imageView = RayOutputImage.imageView;
+		vdii.imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+
+	VkWriteDescriptorSetAccelerationStructureKHR vwdas;
+		vwdas.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR;
+		vwdas.pNext = nullptr;
+		vwdas.accelerationStructureCount = 1;
+		vwdas.pAccelerationStructures = &TopLevelAS.handle;
+
+	VkDescriptorBufferInfo vdbi;
+		vdbi.buffer = MyAtomsUniformBuffer.buffer;
+		vdbi.offset = 0;
+		vdbi.range = sizeof(Atoms);
+
+	VkDescriptorBufferInfo raySceneDb;
+		raySceneDb.buffer = MyRaySceneUniformBuffer.buffer;
+		raySceneDb.offset = 0;
+		raySceneDb.range = sizeof(RayScene);
+
+	VkWriteDescriptorSet vwds[4];
+		vwds[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		vwds[0].pNext = nullptr;
+		vwds[0].dstSet = RayDescriptorSet;
+		vwds[0].dstBinding = 0;
+		vwds[0].dstArrayElement = 0;
+		vwds[0].descriptorCount = 1;
+		vwds[0].descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
+		vwds[0].pImageInfo = &vdii;
+		vwds[0].pBufferInfo = nullptr;
+		vwds[0].pTexelBufferView = nullptr;
+		vwds[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		vwds[1].pNext = &vwdas;
+		vwds[1].dstSet = RayDescriptorSet;
+		vwds[1].dstBinding = 1;
+		vwds[1].dstArrayElement = 0;
+		vwds[1].descriptorCount = 1;
+		vwds[1].descriptorType = VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR;
+		vwds[1].pImageInfo = nullptr;
+		vwds[1].pBufferInfo = nullptr;
+		vwds[1].pTexelBufferView = nullptr;
+		vwds[2].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		vwds[2].pNext = nullptr;
+		vwds[2].dstSet = RayDescriptorSet;
+		vwds[2].dstBinding = 2;
+		vwds[2].dstArrayElement = 0;
+		vwds[2].descriptorCount = 1;
+		vwds[2].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		vwds[2].pImageInfo = nullptr;
+		vwds[2].pBufferInfo = &vdbi;
+		vwds[2].pTexelBufferView = nullptr;
+		vwds[3].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		vwds[3].pNext = nullptr;
+		vwds[3].dstSet = RayDescriptorSet;
+		vwds[3].dstBinding = 3;
+		vwds[3].dstArrayElement = 0;
+		vwds[3].descriptorCount = 1;
+		vwds[3].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		vwds[3].pImageInfo = nullptr;
+		vwds[3].pBufferInfo = &raySceneDb;
+		vwds[3].pTexelBufferView = nullptr;
+	vkUpdateDescriptorSets( LogicalDevice, 4, IN vwds, 0, nullptr );
+
+	return VK_SUCCESS;
+}
+
+
+VkResult
+Init15RayTracingPipeline( )
+{
+	VkResult result = VK_SUCCESS;
+
+	result = Init12SpirvShader( "raygen.spv", OUT &ShaderModuleRayGen );
+	if( result != VK_SUCCESS ) return result;
+	result = Init12SpirvShader( "miss.spv", OUT &ShaderModuleRayMiss );
+	if( result != VK_SUCCESS ) return result;
+	result = Init12SpirvShader( "closesthit.spv", OUT &ShaderModuleRayClosestHit );
+	if( result != VK_SUCCESS ) return result;
+
+	VkPipelineLayoutCreateInfo vplci;
+		vplci.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+		vplci.pNext = nullptr;
+		vplci.flags = 0;
+		vplci.setLayoutCount = 1;
+		vplci.pSetLayouts = &RayDescriptorSetLayout;
+		vplci.pushConstantRangeCount = 0;
+		vplci.pPushConstantRanges = nullptr;
+	result = vkCreatePipelineLayout( LogicalDevice, IN &vplci, PALLOCATOR, OUT &RayPipelineLayout );
+	REPORT( "Ray -- vkCreatePipelineLayout" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	VkPipelineShaderStageCreateInfo stages[3];
+	for( int i = 0; i < 3; i++ )
+	{
+		stages[i].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		stages[i].pNext = nullptr;
+		stages[i].flags = 0;
+		stages[i].pName = "main";
+		stages[i].pSpecializationInfo = nullptr;
+	}
+	stages[0].stage = VK_SHADER_STAGE_RAYGEN_BIT_KHR;
+	stages[0].module = ShaderModuleRayGen;
+	stages[1].stage = VK_SHADER_STAGE_MISS_BIT_KHR;
+	stages[1].module = ShaderModuleRayMiss;
+	stages[2].stage = VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR;
+	stages[2].module = ShaderModuleRayClosestHit;
+
+	VkRayTracingShaderGroupCreateInfoKHR groups[3];
+	for( int i = 0; i < 3; i++ )
+	{
+		groups[i].sType = VK_STRUCTURE_TYPE_RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR;
+		groups[i].pNext = nullptr;
+		groups[i].generalShader = VK_SHADER_UNUSED_KHR;
+		groups[i].closestHitShader = VK_SHADER_UNUSED_KHR;
+		groups[i].anyHitShader = VK_SHADER_UNUSED_KHR;
+		groups[i].intersectionShader = VK_SHADER_UNUSED_KHR;
+		groups[i].pShaderGroupCaptureReplayHandle = nullptr;
+	}
+	groups[0].type = VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR;
+	groups[0].generalShader = 0;
+	groups[1].type = VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR;
+	groups[1].generalShader = 1;
+	groups[2].type = VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR;
+	groups[2].closestHitShader = 2;
+
+	VkRayTracingPipelineCreateInfoKHR vrtpci;
+		vrtpci.sType = VK_STRUCTURE_TYPE_RAY_TRACING_PIPELINE_CREATE_INFO_KHR;
+		vrtpci.pNext = nullptr;
+		vrtpci.flags = 0;
+		vrtpci.stageCount = 3;
+		vrtpci.pStages = stages;
+		vrtpci.groupCount = 3;
+		vrtpci.pGroups = groups;
+		vrtpci.maxPipelineRayRecursionDepth = 1;
+		vrtpci.pLibraryInfo = nullptr;
+		vrtpci.pLibraryInterface = nullptr;
+		vrtpci.pDynamicState = nullptr;
+		vrtpci.layout = RayPipelineLayout;
+		vrtpci.basePipelineHandle = VK_NULL_HANDLE;
+		vrtpci.basePipelineIndex = 0;
+	result = pfnVkCreateRayTracingPipelinesKHR( LogicalDevice, VK_NULL_HANDLE, VK_NULL_HANDLE, 1, IN &vrtpci, PALLOCATOR, OUT &RayPipeline );
+	REPORT( "vkCreateRayTracingPipelinesKHR" );
+	return result;
+}
+
+
+VkResult
+Init15ShaderBindingTable( )
+{
+	const uint32_t groupCount = 3;
+	uint32_t handleSize = RayTracingPipelineProperties.shaderGroupHandleSize;
+	uint32_t handleAlignment = RayTracingPipelineProperties.shaderGroupHandleAlignment;
+	uint32_t baseAlignment = RayTracingPipelineProperties.shaderGroupBaseAlignment;
+	uint32_t handleSizeAligned = AlignedSize( handleSize, handleAlignment );
+	uint32_t groupStride = AlignedSize( handleSizeAligned, baseAlignment );
+	uint32_t sbtSize = groupCount * groupStride;
+
+	std::vector<unsigned char> handles( groupCount * handleSize );
+	VkResult result = pfnVkGetRayTracingShaderGroupHandlesKHR( LogicalDevice, RayPipeline, 0, groupCount, handles.size( ), handles.data( ) );
+	REPORT( "vkGetRayTracingShaderGroupHandlesKHR" );
+	if( result != VK_SUCCESS )
+		return result;
+
+	result = CreateDeviceAddressBuffer( sbtSize,
+		VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+		OUT &RayShaderBindingTable );
+	if( result != VK_SUCCESS )
+		return result;
+
+	void * pSBT;
+	vkMapMemory( LogicalDevice, RayShaderBindingTable.vdm, 0, VK_WHOLE_SIZE, 0, OUT &pSBT );
+	memset( pSBT, 0, sbtSize );
+	for( uint32_t group = 0; group < groupCount; group++ )
+	{
+		memcpy( (unsigned char *)pSBT + group * groupStride, handles.data( ) + group * handleSize, handleSize );
+	}
+	vkUnmapMemory( LogicalDevice, RayShaderBindingTable.vdm );
+
+	VkDeviceAddress sbtAddress = GetBufferDeviceAddress( RayShaderBindingTable.buffer );
+	RaygenSBTRegion.deviceAddress = sbtAddress + 0 * groupStride;
+	RaygenSBTRegion.stride = groupStride;
+	RaygenSBTRegion.size = groupStride;
+	MissSBTRegion.deviceAddress = sbtAddress + 1 * groupStride;
+	MissSBTRegion.stride = groupStride;
+	MissSBTRegion.size = groupStride;
+	HitSBTRegion.deviceAddress = sbtAddress + 2 * groupStride;
+	HitSBTRegion.stride = groupStride;
+	HitSBTRegion.size = groupStride;
+	CallableSBTRegion.deviceAddress = 0;
+	CallableSBTRegion.stride = 0;
+	CallableSBTRegion.size = 0;
+
+	return VK_SUCCESS;
+}
+
+
+VkResult
+Init15RayTracing( )
+{
+	HERE_I_AM( "Init15RayTracing" );
+
+	if( ! RayTracingAvailable )
+		return VK_FAILURE;
+
+	VkResult result = Init15LoadRayTracingFunctions( );
+	if( result != VK_SUCCESS ) return result;
+	result = Init15RayOutputImage( );
+	if( result != VK_SUCCESS ) return result;
+	result = Init15AccelerationStructures( );
+	if( result != VK_SUCCESS ) return result;
+	result = Init15RayTracingDescriptors( );
+	if( result != VK_SUCCESS ) return result;
+	result = Init15RayTracingPipeline( );
+	if( result != VK_SUCCESS ) return result;
+	result = Init15ShaderBindingTable( );
+	return result;
+}
+
+
+VkResult
+RenderRayTracedScene( uint32_t nextImageIndex, VkSemaphore imageReadySemaphore )
+{
+	VkResult result = VK_SUCCESS;
+
+	VkCommandBufferBeginInfo vcbbi;
+		vcbbi.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		vcbbi.pNext = nullptr;
+		vcbbi.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		vcbbi.pInheritanceInfo = nullptr;
+	result = vkBeginCommandBuffer( CommandBuffers[nextImageIndex], IN &vcbbi );
+
+	VkImageSubresourceRange colorRange;
+		colorRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		colorRange.baseMipLevel = 0;
+		colorRange.levelCount = 1;
+		colorRange.baseArrayLayer = 0;
+		colorRange.layerCount = 1;
+
+	VkImageMemoryBarrier startBarriers[2];
+		startBarriers[0].sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+		startBarriers[0].pNext = nullptr;
+		startBarriers[0].srcAccessMask = 0;
+		startBarriers[0].dstAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+		startBarriers[0].oldLayout = RayOutputImageInGeneralLayout ? VK_IMAGE_LAYOUT_GENERAL : VK_IMAGE_LAYOUT_UNDEFINED;
+		startBarriers[0].newLayout = VK_IMAGE_LAYOUT_GENERAL;
+		startBarriers[0].srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		startBarriers[0].dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		startBarriers[0].image = RayOutputImage.image;
+		startBarriers[0].subresourceRange = colorRange;
+		startBarriers[1].sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+		startBarriers[1].pNext = nullptr;
+		startBarriers[1].srcAccessMask = 0;
+		startBarriers[1].dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+		startBarriers[1].oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		startBarriers[1].newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		startBarriers[1].srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		startBarriers[1].dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		startBarriers[1].image = PresentImages[nextImageIndex];
+		startBarriers[1].subresourceRange = colorRange;
+	vkCmdPipelineBarrier( CommandBuffers[nextImageIndex],
+		VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+		VK_PIPELINE_STAGE_RAY_TRACING_SHADER_BIT_KHR | VK_PIPELINE_STAGE_TRANSFER_BIT,
+		0, 0, nullptr, 0, nullptr, 2, startBarriers );
+
+	vkCmdBindPipeline( CommandBuffers[nextImageIndex], VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR, RayPipeline );
+	vkCmdBindDescriptorSets( CommandBuffers[nextImageIndex], VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR, RayPipelineLayout, 0, 1, &RayDescriptorSet, 0, nullptr );
+	pfnVkCmdTraceRaysKHR( CommandBuffers[nextImageIndex], IN &RaygenSBTRegion, IN &MissSBTRegion, IN &HitSBTRegion, IN &CallableSBTRegion, Width, Height, 1 );
+
+	VkImageMemoryBarrier copyBarriers[2];
+		copyBarriers[0] = startBarriers[0];
+		copyBarriers[0].srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+		copyBarriers[0].dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+		copyBarriers[0].oldLayout = VK_IMAGE_LAYOUT_GENERAL;
+		copyBarriers[0].newLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+		copyBarriers[1] = startBarriers[1];
+		copyBarriers[1].srcAccessMask = 0;
+		copyBarriers[1].dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+		copyBarriers[1].oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		copyBarriers[1].newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+	vkCmdPipelineBarrier( CommandBuffers[nextImageIndex],
+		VK_PIPELINE_STAGE_RAY_TRACING_SHADER_BIT_KHR,
+		VK_PIPELINE_STAGE_TRANSFER_BIT,
+		0, 0, nullptr, 0, nullptr, 2, copyBarriers );
+
+	VkImageCopy imageCopy;
+		imageCopy.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		imageCopy.srcSubresource.mipLevel = 0;
+		imageCopy.srcSubresource.baseArrayLayer = 0;
+		imageCopy.srcSubresource.layerCount = 1;
+		imageCopy.srcOffset.x = 0;
+		imageCopy.srcOffset.y = 0;
+		imageCopy.srcOffset.z = 0;
+		imageCopy.dstSubresource = imageCopy.srcSubresource;
+		imageCopy.dstOffset = imageCopy.srcOffset;
+		imageCopy.extent.width = Width;
+		imageCopy.extent.height = Height;
+		imageCopy.extent.depth = 1;
+	vkCmdCopyImage( CommandBuffers[nextImageIndex],
+		RayOutputImage.image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+		PresentImages[nextImageIndex], VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+		1, IN &imageCopy );
+
+	VkImageMemoryBarrier endBarriers[2];
+		endBarriers[0] = startBarriers[0];
+		endBarriers[0].srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+		endBarriers[0].dstAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+		endBarriers[0].oldLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+		endBarriers[0].newLayout = VK_IMAGE_LAYOUT_GENERAL;
+		endBarriers[1] = startBarriers[1];
+		endBarriers[1].srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+		endBarriers[1].dstAccessMask = 0;
+		endBarriers[1].oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		endBarriers[1].newLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+	vkCmdPipelineBarrier( CommandBuffers[nextImageIndex],
+		VK_PIPELINE_STAGE_TRANSFER_BIT,
+		VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+		0, 0, nullptr, 0, nullptr, 2, endBarriers );
+	RayOutputImageInGeneralLayout = true;
+
+	vkEndCommandBuffer( CommandBuffers[nextImageIndex] );
+
+	VkFenceCreateInfo vfci;
+		vfci.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		vfci.pNext = nullptr;
+		vfci.flags = 0;
+	VkFence renderFence;
+	vkCreateFence( LogicalDevice, IN &vfci, PALLOCATOR, OUT &renderFence );
+
+	VkPipelineStageFlags waitStage = VK_PIPELINE_STAGE_RAY_TRACING_SHADER_BIT_KHR;
+	VkSubmitInfo vsi;
+		vsi.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		vsi.pNext = nullptr;
+		vsi.waitSemaphoreCount = 1;
+		vsi.pWaitSemaphores = &imageReadySemaphore;
+		vsi.pWaitDstStageMask = &waitStage;
+		vsi.commandBufferCount = 1;
+		vsi.pCommandBuffers = &CommandBuffers[nextImageIndex];
+		vsi.signalSemaphoreCount = 0;
+		vsi.pSignalSemaphores = nullptr;
+	result = vkQueueSubmit( Queue, 1, IN &vsi, IN renderFence );
+	REPORT( "Ray -- vkQueueSubmit" );
+	vkWaitForFences( LogicalDevice, 1, IN &renderFence, VK_TRUE, UINT64_MAX );
+	vkDestroyFence( LogicalDevice, renderFence, PALLOCATOR );
+
+	VkPresentInfoKHR vpi;
+		vpi.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		vpi.pNext = nullptr;
+		vpi.waitSemaphoreCount = 0;
+		vpi.pWaitSemaphores = nullptr;
+		vpi.swapchainCount = 1;
+		vpi.pSwapchains = &SwapChain;
+		vpi.pImageIndices = &nextImageIndex;
+		vpi.pResults = nullptr;
+	result = vkQueuePresentKHR( Queue, IN &vpi );
+	REPORT( "Ray -- vkQueuePresentKHR" );
+	vkDestroySemaphore( LogicalDevice, imageReadySemaphore, PALLOCATOR );
+	return result;
+}
+
+
 
 
 // *********************************************
@@ -3998,6 +5177,11 @@ RenderScene( )
 	//REPORT( "vkCreateSemaphore" );
 
 	if( Verbose &&  NumRenders <= 2 )	fprintf(FpDebug, "nextImageIndex = %d\n", nextImageIndex);
+
+	if( RayTracingEnabled )
+	{
+		return RenderRayTracedScene( nextImageIndex, imageReadySemaphore );
+	}
 
 	VkCommandBufferBeginInfo		vcbbi;
 		vcbbi.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -4222,6 +5406,29 @@ Reset( )
 	Scene.uLightPos = glm::vec4( -50., -50., 10., 1. );
 	Scene.uLightColor = glm::vec4( 1., 1., 1., 1. );
 	Scene.uLightKaKdKs = glm::vec4( 0.2f, 0.5f, 0.3f, 1. );
+	CameraPos = glm::vec3( 0.f, 1.2f, 10.f );
+	CameraYaw = -M_PI / 2.f;
+	CameraPitch = 0.f;
+	MovingLightPos[0] = glm::vec3( -2.f, 5.f, 4.f );
+	MovingLightPos[1] = glm::vec3(  3.f, 4.f, 1.f );
+	MovingLightPos[2] = glm::vec3( -3.f, 3.f, 0.f );
+	MovingLightPos[3] = glm::vec3(  0.f, 5.f, -3.f );
+	SelectedLight = 0;
+	PointLightsEnabled = true;
+	FirstMouseLook = true;
+	RayScene.uCameraPos = glm::vec4( CameraPos, 1.f );
+	RayScene.uCameraForward = glm::vec4( 0.f, 0.f, -1.f, 0.f );
+	RayScene.uCameraRight = glm::vec4( 1.f, 0.f, 0.f, 0.f );
+	RayScene.uCameraUp = glm::vec4( 0.f, 1.f, 0.f, 0.f );
+	RayScene.uLightColor[0] = glm::vec4( 1.f, 0.95f, 0.80f, 1.f );
+	RayScene.uLightColor[1] = glm::vec4( 1.f, 0.08f, 0.04f, 1.f );
+	RayScene.uLightColor[2] = glm::vec4( 0.05f, 1.f, 0.15f, 1.f );
+	RayScene.uLightColor[3] = glm::vec4( 0.08f, 0.25f, 1.f, 1.f );
+	for( int i = 0; i < 4; i++ )
+		RayScene.uLightPos[i] = glm::vec4( MovingLightPos[i], 1.f );
+	RayScene.uLightControl = glm::vec4( (float)SelectedLight, PointLightsEnabled ? 1.f : 0.f, 0.f, 0.f );
+	RayMoleculeRotation = 0.f;
+	RayScene.uMolecule = glm::vec4( RAY_MOLECULE_Y_OFFSET, RayMoleculeRotation, 0.f, 0.f );
 
 
 	// initialize the object stuff:
@@ -4244,6 +5451,67 @@ Reset( )
 void
 UpdateScene( )
 {
+	static double lastTime = 0.;
+	double dt = ( lastTime == 0. ) ? 0.016 : Time - lastTime;
+	lastTime = Time;
+	if( dt < 0. )
+		dt = 0.;
+	if( dt > 0.05 )
+		dt = 0.05;
+
+	glm::vec3 cameraForward(
+		cosf( CameraPitch ) * cosf( CameraYaw ),
+		sinf( CameraPitch ),
+		cosf( CameraPitch ) * sinf( CameraYaw )
+	);
+	cameraForward = glm::normalize( cameraForward );
+	glm::vec3 cameraRight = glm::normalize( glm::cross( cameraForward, glm::vec3( 0.f, 1.f, 0.f ) ) );
+	glm::vec3 cameraUp = glm::normalize( glm::cross( cameraRight, cameraForward ) );
+
+	float cameraSpeed = 5.f * (float)dt;
+	if( glfwGetKey( MainWindow, GLFW_KEY_W ) == GLFW_PRESS )
+		CameraPos += cameraForward * cameraSpeed;
+	if( glfwGetKey( MainWindow, GLFW_KEY_S ) == GLFW_PRESS )
+		CameraPos -= cameraForward * cameraSpeed;
+	if( glfwGetKey( MainWindow, GLFW_KEY_A ) == GLFW_PRESS )
+		CameraPos -= cameraRight * cameraSpeed;
+	if( glfwGetKey( MainWindow, GLFW_KEY_D ) == GLFW_PRESS )
+		CameraPos += cameraRight * cameraSpeed;
+
+	float lightSpeed = 4.f * (float)dt;
+	if( glfwGetKey( MainWindow, GLFW_KEY_LEFT ) == GLFW_PRESS )
+		MovingLightPos[SelectedLight].x -= lightSpeed;
+	if( glfwGetKey( MainWindow, GLFW_KEY_RIGHT ) == GLFW_PRESS )
+		MovingLightPos[SelectedLight].x += lightSpeed;
+	if( glfwGetKey( MainWindow, GLFW_KEY_UP ) == GLFW_PRESS )
+		MovingLightPos[SelectedLight].z -= lightSpeed;
+	if( glfwGetKey( MainWindow, GLFW_KEY_DOWN ) == GLFW_PRESS )
+		MovingLightPos[SelectedLight].z += lightSpeed;
+	if( glfwGetKey( MainWindow, GLFW_KEY_PERIOD ) == GLFW_PRESS )
+		MovingLightPos[SelectedLight].y += lightSpeed;
+	if( glfwGetKey( MainWindow, GLFW_KEY_COMMA ) == GLFW_PRESS )
+		MovingLightPos[SelectedLight].y -= lightSpeed;
+
+	RayScene.uCameraPos = glm::vec4( CameraPos, 1.f );
+	RayScene.uCameraForward = glm::vec4( cameraForward, 0.f );
+	RayScene.uCameraRight = glm::vec4( cameraRight, 0.f );
+	RayScene.uCameraUp = glm::vec4( cameraUp, 0.f );
+	glm::vec3 lightOrbitCenter = glm::vec3( 1.0f, RAY_MOLECULE_Y_OFFSET, 0.8f );
+	float lightOrbitAngle = (float)Time * 0.65f;
+	for( int i = 0; i < 4; i++ )
+	{
+		float phase = lightOrbitAngle + (float)i * M_PI * 0.5f;
+		glm::vec3 offset = MovingLightPos[i] - lightOrbitCenter;
+		RayScene.uLightPos[i] = glm::vec4( lightOrbitCenter + RotateY( offset, phase ), 1.f );
+	}
+	RayScene.uLightControl = glm::vec4( (float)SelectedLight, PointLightsEnabled ? 1.f : 0.f, 0.f, 0.f );
+	if( RayTracingEnabled && UseRotate && !Paused )
+	{
+		UpdateRayTracingInstances( (float)Time * 0.8f );
+	}
+	RayScene.uMolecule = glm::vec4( RAY_MOLECULE_Y_OFFSET, RayMoleculeRotation, 0.f, 0.f );
+	if( MyRaySceneUniformBuffer.buffer != VK_NULL_HANDLE )
+		Fill05DataBuffer( MyRaySceneUniformBuffer, (void *) &RayScene );
 
 //************************P4
 	Fill05DataBuffer( MyAtomsUniformBuffer, (void *) &Atoms );	// really only need to do this once...
@@ -4373,6 +5641,19 @@ GLFWKeyboard( GLFWwindow * window, int key, int scancode, int action, int mods )
 		
 		switch (key)
 		{
+			case '1':
+				SelectedLight = 0;
+				break;
+			case '2':
+				SelectedLight = 1;
+				break;
+			case '3':
+				SelectedLight = 2;
+				break;
+			case '4':
+				SelectedLight = 3;
+				break;
+
 			case 'i':
 			case 'I':
 				UseIndexBuffer = ! UseIndexBuffer;
@@ -4397,7 +5678,10 @@ GLFWKeyboard( GLFWwindow * window, int key, int scancode, int action, int mods )
 
 			case 'p':
 			case 'P':
-				Paused = ! Paused;
+				if( RayTracingEnabled )
+					PointLightsEnabled = ! PointLightsEnabled;
+				else
+					Paused = ! Paused;
 				break;
 
 			case 'q':
@@ -4480,6 +5764,31 @@ GLFWMouseButton( GLFWwindow *window, int button, int action, int mods )
 void
 GLFWMouseMotion( GLFWwindow *window, double xpos, double ypos )
 {
+	if( RayTracingEnabled )
+	{
+		if( FirstMouseLook )
+		{
+			Xmouse = (int)xpos;
+			Ymouse = (int)ypos;
+			FirstMouseLook = false;
+			return;
+		}
+
+		int dx = (int)xpos - Xmouse;
+		int dy = (int)ypos - Ymouse;
+		const float mouseSensitivity = 0.0025f;
+		CameraYaw += mouseSensitivity * (float)dx;
+		CameraPitch -= mouseSensitivity * (float)dy;
+		const float pitchLimit = 1.50f;
+		if( CameraPitch > pitchLimit )
+			CameraPitch = pitchLimit;
+		if( CameraPitch < -pitchLimit )
+			CameraPitch = -pitchLimit;
+		Xmouse = (int)xpos;
+		Ymouse = (int)ypos;
+		return;
+	}
+
 	int dx = (int)xpos - Xmouse;		// change in mouse coords
 	int dy = (int)ypos - Ymouse;
 

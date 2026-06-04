@@ -13,7 +13,7 @@ numbers.cpp:		sample.cpp
 			rm -f numbers.cpp
 			cat -n sample.cpp > numbers.cpp
 
-ALLSHADERS:		sample-vert.spv  sample-frag.spv
+ALLSHADERS:		sample-vert.spv  sample-frag.spv raygen.spv miss.spv closesthit.spv
 
 sample-vert.spv:	sample-vert.vert
 			$(GLSLANG) -V sample-vert.vert  -o sample-vert.spv
@@ -21,7 +21,16 @@ sample-vert.spv:	sample-vert.vert
 sample-frag.spv:	sample-frag.frag
 			$(GLSLANG) -V sample-frag.frag  -o sample-frag.spv
 
-shaders:		sample-vert.spv  sample-frag.spv
+raygen.spv:		raygen.rgen
+			$(GLSLANG) --target-env vulkan1.2 -V raygen.rgen -o raygen.spv
+
+miss.spv:		miss.rmiss
+			$(GLSLANG) --target-env vulkan1.2 -V miss.rmiss -o miss.spv
+
+closesthit.spv:		closesthit.rchit
+			$(GLSLANG) --target-env vulkan1.2 -V closesthit.rchit -o closesthit.spv
+
+shaders:		sample-vert.spv  sample-frag.spv raygen.spv miss.spv closesthit.spv
 
 sample-vert-dis.txt:	sample-vert.vert
 			rm -f sample-vert-dis.txt
@@ -39,4 +48,4 @@ save:
 			cp sample-frag.frag sample-frag.save.frag
 
 clean:
-			rm -f Sample sample.o numbers.cpp sample-vert-dis.txt sample-frag-dis.txt
+			rm -f Sample sample.o numbers.cpp sample-vert-dis.txt sample-frag-dis.txt raygen.spv miss.spv closesthit.spv
